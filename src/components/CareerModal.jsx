@@ -1,0 +1,237 @@
+import React, { useEffect, useState } from 'react';
+import { X, Briefcase, MapPin, Clock, ArrowUpRight, CheckCircle2, Sparkles } from 'lucide-react';
+
+export default function CareerModal({ isOpen, onClose }) {
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [applied, setApplied] = useState(false);
+  const [applicantName, setApplicantName] = useState('');
+  const [applicantEmail, setApplicantEmail] = useState('');
+  const [portfolioLink, setPortfolioLink] = useState('');
+
+  const positions = [
+    {
+      id: 'senior-motion',
+      title: 'Senior 3D / Motion Designer',
+      department: 'PRODUCTION & CINEMA',
+      location: 'Remote / Hybrid (NYC / Dubai)',
+      type: 'Full-Time',
+      description: 'Lead visual design and 3D CGI commercial assets for global automotive and luxury brands.'
+    },
+    {
+      id: 'fullstack-engineer',
+      title: 'Senior Creative Technologist / Frontend',
+      department: 'SOFTWARE ENGINEERING',
+      location: 'Remote / London',
+      type: 'Full-Time',
+      description: 'Architect WebGL 3D web experiences, React/Next.js interactive portfolios, and digital agency platforms.'
+    },
+    {
+      id: 'media-buyer',
+      title: 'Performance Media Buying Lead',
+      department: 'GROWTH & DATA',
+      location: 'Remote',
+      type: 'Full-Time',
+      description: 'Manage $10M+ annual programmatic, Meta, TikTok, and Google advertising budgets with high ROAS.'
+    },
+    {
+      id: 'creative-director',
+      title: 'Associate Creative Director',
+      department: 'BRAND & ART DIRECTION',
+      location: 'Hybrid (NYC / Tokyo)',
+      type: 'Full-Time',
+      description: 'Oversee multi-channel luxury brand campaigns, editorial direction, and visual storytelling.'
+    }
+  ];
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  const handleApply = (e) => {
+    e.preventDefault();
+    setApplied(true);
+  };
+
+  const handleReset = () => {
+    setApplied(false);
+    setSelectedJob(null);
+    setApplicantName('');
+    setApplicantEmail('');
+    setPortfolioLink('');
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-xl animate-fadeIn">
+      <div className="absolute inset-0" onClick={onClose} />
+
+      <div className="relative z-10 w-full max-w-3xl bg-neutral-950 border border-neutral-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[88vh]">
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-neutral-800 bg-neutral-900/60">
+          <div>
+            <div className="flex items-center space-x-2">
+              <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
+              <span className="text-[10px] font-bold tracking-widest uppercase text-brand-red">
+                JOIN DEVOTIX MEDIA
+              </span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white font-display mt-0.5">
+              CAREERS & OPPORTUNITIES
+            </h3>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-9 h-9 rounded-full bg-neutral-900 hover:bg-brand-red hover:text-white text-neutral-400 flex items-center justify-center transition-colors border border-neutral-800"
+            aria-label="Close modal"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="overflow-y-auto p-6 sm:p-8 space-y-6">
+          {applied ? (
+            <div className="py-12 text-center flex flex-col items-center">
+              <div className="w-14 h-14 rounded-full bg-brand-red/20 text-brand-red flex items-center justify-center mb-4 border border-brand-red/40">
+                <CheckCircle2 className="w-8 h-8" />
+              </div>
+              <h4 className="text-xl font-black uppercase tracking-tight text-white font-display">
+                APPLICATION SUBMITTED
+              </h4>
+              <p className="mt-2 text-xs sm:text-sm text-neutral-400 max-w-md">
+                Thank you for applying to join the Devotix team. Our talent acquisition leads will review your portfolio and reach out shortly.
+              </p>
+              <button
+                onClick={handleReset}
+                className="mt-6 px-6 py-2.5 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded-md transition-colors"
+              >
+                Done
+              </button>
+            </div>
+          ) : selectedJob ? (
+            /* Application Form for Selected Job */
+            <div>
+              <button
+                onClick={() => setSelectedJob(null)}
+                className="text-xs text-neutral-400 hover:text-white font-semibold uppercase mb-4 flex items-center gap-1"
+              >
+                ← Back to all roles
+              </button>
+              <div className="p-4 rounded-xl bg-neutral-900/60 border border-neutral-800 mb-6">
+                <span className="text-[9px] font-bold uppercase tracking-widest text-brand-red">
+                  {selectedJob.department}
+                </span>
+                <h4 className="text-lg font-black text-white uppercase font-display mt-0.5">
+                  {selectedJob.title}
+                </h4>
+                <p className="text-xs text-neutral-400 mt-1">{selectedJob.description}</p>
+              </div>
+
+              <form onSubmit={handleApply} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-1.5">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={applicantName}
+                    onChange={(e) => setApplicantName(e.target.value)}
+                    placeholder="Alex Morgan"
+                    className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-white text-xs placeholder-neutral-500 focus:outline-none focus:border-brand-red"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-1.5">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={applicantEmail}
+                    onChange={(e) => setApplicantEmail(e.target.value)}
+                    placeholder="alex@domain.com"
+                    className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-white text-xs placeholder-neutral-500 focus:outline-none focus:border-brand-red"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-1.5">
+                    Portfolio / GitHub / Reel URL *
+                  </label>
+                  <input
+                    type="url"
+                    required
+                    value={portfolioLink}
+                    onChange={(e) => setPortfolioLink(e.target.value)}
+                    placeholder="https://behance.net/alex or https://alex.design"
+                    className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-white text-xs placeholder-neutral-500 focus:outline-none focus:border-brand-red"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full py-3 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-md shadow-red-600/30"
+                >
+                  SUBMIT APPLICATION
+                </button>
+              </form>
+            </div>
+          ) : (
+            /* Open Positions List */
+            <div className="space-y-3.5">
+              <div className="mb-4">
+                <p className="text-xs text-neutral-400 font-medium">
+                  We are always seeking world-class creatives, cinematic directors, 3D artists, and software engineers who push boundaries.
+                </p>
+              </div>
+
+              {positions.map((job) => (
+                <div
+                  key={job.id}
+                  onClick={() => setSelectedJob(job)}
+                  className="group p-4 rounded-xl bg-neutral-900/60 border border-neutral-800/80 hover:border-brand-red/50 transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                >
+                  <div>
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-brand-red">
+                      {job.department}
+                    </span>
+                    <h4 className="text-sm sm:text-base font-black text-white uppercase font-display group-hover:text-brand-red transition-colors">
+                      {job.title}
+                    </h4>
+                    <div className="flex items-center gap-3 text-[10px] text-neutral-400 mt-1">
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3 text-neutral-500" />
+                        {job.location}
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-neutral-500" />
+                        {job.type}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button className="self-start sm:self-center px-3.5 py-1.5 bg-neutral-800 group-hover:bg-brand-red group-hover:text-white text-neutral-300 text-[10px] font-bold uppercase rounded transition-colors flex items-center gap-1">
+                    <span>APPLY</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
