@@ -14,7 +14,7 @@ export default function JobApplyPage({
   const defaultRole = {
     title: 'SENIOR GRAPHIC DESIGNER',
     department: 'CREATIVE',
-    location: 'CAIRO, EGYPT',
+    location: 'ISMAILIA, EGYPT',
     type: 'FULL-TIME',
     level: 'SENIOR LEVEL',
     description:
@@ -75,7 +75,7 @@ export default function JobApplyPage({
 
           <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] font-bold tracking-widest text-neutral-500 uppercase flex-shrink-0">
             <span>• {currentRole.department || 'CREATIVE'}</span>
-            <span>• {currentRole.location || 'CAIRO, EGYPT'}</span>
+            <span>• {currentRole.location || 'ISMAILIA, EGYPT'}</span>
             <span>• {currentRole.type || 'FULL-TIME'}</span>
             <span>• {currentRole.level || 'SENIOR LEVEL'}</span>
           </div>

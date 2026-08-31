@@ -23,7 +23,7 @@ export default function CareerPage({
       id: 'sr-graphic-designer',
       title: 'SENIOR GRAPHIC DESIGNER',
       department: 'CREATIVE',
-      location: 'CAIRO, EGYPT',
+      location: 'ISMAILIA, EGYPT',
       type: 'FULL-TIME',
       level: 'SENIOR LEVEL',
       workplace: 'Hybrid/On-site',
@@ -33,7 +33,7 @@ export default function CareerPage({
       id: 'media-buyer',
       title: 'MEDIA BUYER',
       department: 'MEDIA',
-      location: 'CAIRO, EGYPT',
+      location: 'ISMAILIA, EGYPT',
       type: 'FULL-TIME',
       level: 'MID-SENIOR LEVEL',
       workplace: 'On-site',
@@ -53,7 +53,7 @@ export default function CareerPage({
       id: 'creative-technologist',
       title: 'CREATIVE TECHNOLOGIST / FRONTEND DEV',
       department: 'ENGINEERING',
-      location: 'CAIRO / REMOTE',
+      location: 'ISMAILIA / REMOTE',
       type: 'FULL-TIME',
       level: 'SENIOR LEVEL',
       workplace: 'Hybrid',
@@ -211,7 +211,7 @@ export default function CareerPage({
                 className="px-2.5 py-1.5 bg-neutral-50 border border-neutral-200 rounded text-[11px] font-bold text-neutral-700 focus:outline-none cursor-pointer"
               >
                 <option value="All">All Locations</option>
-                <option value="Cairo">Cairo, Egypt</option>
+                <option value="Ismailia">Ismailia, Egypt</option>
                 <option value="Remote">Remote</option>
               </select>
 
