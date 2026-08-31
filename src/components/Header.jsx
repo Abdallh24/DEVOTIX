@@ -3,10 +3,9 @@ import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 const NAV_LINKS = [
   { name: 'HOME', href: '#home', type: 'anchor' },
+  { name: 'CLIENTS', href: '#clients', type: 'anchor' },
   { name: 'SERVICES', href: '#services', type: 'anchor' },
-  { name: 'OUR CLIENT', href: '#clients', type: 'anchor' },
   { name: 'PORTFOLIO', href: '#portfolio', type: 'portfolio' },
-  { name: 'SOFTWARE ENGINEERING', href: '#software-engineering', type: 'software-engineering' },
   { name: 'CAREER', href: '#career', type: 'career' },
   { name: 'ABOUT US', href: '#about', type: 'about' },
   { name: 'CONTACT US', href: '#contact', type: 'contact' },
@@ -72,15 +71,6 @@ export default function Header({
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         onNavigatePortfolio && onNavigatePortfolio();
-      }
-      return;
-    }
-
-    if (link.type === 'software-engineering') {
-      if (currentPage === 'software-engineering') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (onNavigateSoftwareEngineering) {
-        onNavigateSoftwareEngineering();
       }
       return;
     }
@@ -180,27 +170,25 @@ export default function Header({
           </a>
 
           {/* Center: Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-3 xl:space-x-4 2xl:space-x-5 flex-nowrap overflow-hidden">
+          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6 2xl:space-x-7 flex-nowrap overflow-hidden">
             {NAV_LINKS.map((link) => {
               const targetSection = link.href.replace('#', '');
-              const isActive = (currentPage === 'portfolio' || currentPage === 'project-view')
+              const isActive = (currentPage === 'portfolio' || currentPage === 'project-view' || currentPage === 'software-engineering')
                 ? link.type === 'portfolio'
-                : currentPage === 'software-engineering'
-                  ? link.type === 'software-engineering'
-                  : currentPage === 'about'
-                    ? link.type === 'about'
-                    : (currentPage === 'career' || currentPage === 'job-apply' || currentPage === 'send-cv')
-                      ? link.type === 'career'
-                      : currentPage === 'contact'
-                        ? link.type === 'contact'
-                        : link.type === 'anchor' && activeSection === targetSection;
+                : currentPage === 'about'
+                  ? link.type === 'about'
+                  : (currentPage === 'career' || currentPage === 'job-apply' || currentPage === 'send-cv')
+                    ? link.type === 'career'
+                    : currentPage === 'contact'
+                      ? link.type === 'contact'
+                      : link.type === 'anchor' && activeSection === targetSection;
 
               return (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link)}
-                  className={`text-[8.5px] xl:text-[9.5px] 2xl:text-[10px] font-bold tracking-wider transition-colors duration-150 uppercase relative py-1 whitespace-nowrap cursor-pointer ${
+                  className={`text-[9px] xl:text-[10px] 2xl:text-[10.5px] font-bold tracking-wider transition-colors duration-150 uppercase relative py-1 whitespace-nowrap cursor-pointer ${
                     isActive ? 'text-brand-red' : 'text-neutral-800 hover:text-brand-red'
                   }`}
                 >
@@ -213,13 +201,13 @@ export default function Header({
             })}
           </nav>
 
-          {/* Right: Red "Start Project" / "LET'S TALK" Link/Button */}
+          {/* Right: Red "LET'S TALK" CTA Button */}
           <div className="hidden sm:flex items-center flex-shrink-0">
             <button
               onClick={handleCtaClick}
               className="bg-brand-red hover:bg-brand-redHover text-white text-[9.5px] xl:text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 lg:px-3.5 lg:py-1.5 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow hover:shadow-red-500/30 flex items-center space-x-1 cursor-pointer"
             >
-              <span>START PROJECT</span>
+              <span>LET'S TALK</span>
               <ArrowUpRight className="w-2.5 h-2.5" />
             </button>
           </div>
@@ -241,17 +229,15 @@ export default function Header({
           <div className="lg:hidden bg-white border-t border-neutral-200 px-5 pt-3 pb-5 space-y-1.5 animate-fadeIn max-h-[80vh] overflow-y-auto">
             {NAV_LINKS.map((link) => {
               const targetSection = link.href.replace('#', '');
-              const isActive = (currentPage === 'portfolio' || currentPage === 'project-view')
+              const isActive = (currentPage === 'portfolio' || currentPage === 'project-view' || currentPage === 'software-engineering')
                 ? link.type === 'portfolio'
-                : currentPage === 'software-engineering'
-                  ? link.type === 'software-engineering'
-                  : currentPage === 'about'
-                    ? link.type === 'about'
-                    : (currentPage === 'career' || currentPage === 'job-apply' || currentPage === 'send-cv')
-                      ? link.type === 'career'
-                      : currentPage === 'contact'
-                        ? link.type === 'contact'
-                        : link.type === 'anchor' && activeSection === targetSection;
+                : currentPage === 'about'
+                  ? link.type === 'about'
+                  : (currentPage === 'career' || currentPage === 'job-apply' || currentPage === 'send-cv')
+                    ? link.type === 'career'
+                    : currentPage === 'contact'
+                      ? link.type === 'contact'
+                      : link.type === 'anchor' && activeSection === targetSection;
 
               return (
                 <a
@@ -274,7 +260,7 @@ export default function Header({
                 }}
                 className="w-full bg-brand-red hover:bg-brand-redHover text-white font-bold text-xs uppercase py-2.5 rounded-full tracking-wider transition-colors shadow text-center flex items-center justify-center space-x-2"
               >
-                <span>START PROJECT</span>
+                <span>LET'S TALK</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </button>
             </div>
