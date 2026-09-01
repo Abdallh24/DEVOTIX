@@ -7,19 +7,12 @@ export default function RightSlideBar({ currentPage = 'home' }) {
   const pageSections = {
     home: [
       { id: 'home', label: 'Home' },
-      { id: 'showreel', label: 'Showreel' },
       { id: 'work', label: 'Our Work' },
       { id: 'clients', label: 'Clients' },
-      { id: 'services', label: 'Services' },
-      { id: 'production', label: 'Production' },
+      { id: 'graphic', label: 'Graphic' },
+      { id: 'production', label: 'Videos' },
       { id: 'photography', label: 'Photography' },
-      { id: 'cta', label: 'Get Started' },
-    ],
-    portfolio: [
-      { id: 'port-hero', label: 'Overview' },
-      { id: 'port-featured', label: 'Featured Case' },
-      { id: 'port-grid', label: 'Archive' },
-      { id: 'port-cta', label: 'Contact' },
+      { id: 'services', label: 'Services' },
     ],
     'project-view': [
       { id: 'view-title', label: 'Overview' },

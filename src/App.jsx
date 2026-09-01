@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import HomeVideoSection from './components/HomeVideoSection';
 import Work from './components/Work';
 import Clients from './components/Clients';
+import Graphic from './components/Graphic';
 import Services from './components/Services';
 import Production from './components/Production';
 import Photography from './components/Photography';
-import CallToAction from './components/CallToAction';
 import Footer from './components/Footer';
 import RightSlideBar from './components/RightSlideBar';
 
 // Pages
-import PortfolioPage from './pages/PortfolioPage';
 import ProjectViewPage from './pages/ProjectViewPage';
 import SoftwareCaseStudyPage from './pages/SoftwareCaseStudyPage';
 import AboutPage from './pages/AboutPage';
@@ -31,7 +29,7 @@ import CareerModal from './components/CareerModal';
 import AboutModal from './components/AboutModal';
 
 export default function App() {
-  // Page routing state ('home' | 'portfolio' | 'project-view' | 'software-engineering' | 'about' | 'career' | 'job-apply' | 'send-cv' | 'contact')
+  // Page routing state ('home' | 'project-view' | 'software-engineering' | 'about' | 'career' | 'job-apply' | 'send-cv' | 'contact')
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedProjectDetail, setSelectedProjectDetail] = useState(null);
   const [selectedJobRole, setSelectedJobRole] = useState(null);
@@ -49,9 +47,7 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
-      if (hash === '#portfolio') {
-        setCurrentPage('portfolio');
-      } else if (hash === '#software-engineering' || hash === '#case-study') {
+      if (hash === '#software-engineering' || hash === '#case-study') {
         setCurrentPage('software-engineering');
       } else if (hash === '#project-view') {
         setCurrentPage('project-view');
@@ -74,12 +70,6 @@ export default function App() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
-
-  const navigateToPortfolio = () => {
-    window.location.hash = '#portfolio';
-    setCurrentPage('portfolio');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const navigateToSoftwareEngineering = () => {
     window.location.hash = '#software-engineering';
@@ -168,7 +158,6 @@ export default function App() {
         onNavigateCareer={navigateToCareer}
         onOpenAbout={navigateToAbout}
         onNavigateAbout={navigateToAbout}
-        onNavigatePortfolio={navigateToPortfolio}
         onNavigateSoftwareEngineering={navigateToSoftwareEngineering}
         onNavigateHome={navigateToHome}
       />
@@ -209,25 +198,18 @@ export default function App() {
         />
       ) : currentPage === 'software-engineering' ? (
         <SoftwareCaseStudyPage
-          onBackToPortfolio={navigateToPortfolio}
+          onBack={() => navigateToHome('work')}
+          onBackToHome={() => navigateToHome('work')}
+          onBackToPortfolio={() => navigateToHome('work')}
           onOpenContact={navigateToContact}
           onOpenPolicy={(type) => setPolicyType(type)}
         />
       ) : currentPage === 'project-view' ? (
         <ProjectViewPage
           project={selectedProjectDetail}
-          onBackToPortfolio={navigateToPortfolio}
+          onBackToPortfolio={() => navigateToHome('work')}
           onPlayVideo={(video) => setActiveVideo(video)}
           onOpenLightbox={(photos, index) => setLightboxData({ photos, index })}
-          onOpenPolicy={(type) => setPolicyType(type)}
-        />
-      ) : currentPage === 'portfolio' ? (
-        <PortfolioPage
-          onBackToHome={() => navigateToHome('home')}
-          onOpenContact={navigateToContact}
-          onSelectProject={(project) => setSelectedProject(project)}
-          onViewProjectDetail={navigateToProjectView}
-          onNavigateSoftwareEngineering={navigateToSoftwareEngineering}
           onOpenPolicy={(type) => setPolicyType(type)}
         />
       ) : (
@@ -235,13 +217,10 @@ export default function App() {
           <main>
             {/* 2. Hero Section (id="home") */}
             <Hero
-              onOpenPortfolio={navigateToPortfolio}
               onOpenContact={navigateToContact}
               onScrollToWork={scrollToWork}
+              onPlayVideo={(video) => setActiveVideo(video)}
             />
-
-            {/* 2.5 Featured Agency Showreel Video Section (id="showreel") */}
-            <HomeVideoSection onPlayVideo={(video) => setActiveVideo(video)} />
 
             {/* 3. Our Work Section (id="work") */}
             <Work onSelectProject={(project) => setSelectedProject(project)} />
@@ -249,20 +228,20 @@ export default function App() {
             {/* 4. Clients Section (id="clients") */}
             <Clients />
 
-            {/* 5. Services Section (id="services") */}
-            <Services onSelectService={navigateToContact} />
+            {/* 4.5. Graphic Section (id="graphic") */}
+            <Graphic onOpenLightbox={(photos, index) => setLightboxData({ photos, index })} />
 
-            {/* 6. Production Section (id="production") */}
+            {/* 5. Production Section (id="production") */}
             <Production onPlayVideo={(video) => setActiveVideo(video)} />
 
-            {/* 7. Photography Section (id="photography") */}
+            {/* 6. Photography Section (id="photography") */}
             <Photography onOpenLightbox={(photos, index) => setLightboxData({ photos, index })} />
 
-            {/* 8. Bottom Call to Action */}
-            <CallToAction onOpenContact={navigateToContact} />
+            {/* 7. Services Section (id="services") - Right Before Footer */}
+            <Services onSelectService={navigateToContact} />
           </main>
 
-          {/* 9. Standalone Footer (White Background) */}
+          {/* Standalone Footer (White Background) */}
           <Footer onOpenPolicy={(type) => setPolicyType(type)} />
         </>
       )}
@@ -290,6 +269,7 @@ export default function App() {
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
         onOpenContact={navigateToContact}
+        onNavigateSoftwareEngineering={navigateToSoftwareEngineering}
       />
 
       <PolicyModal

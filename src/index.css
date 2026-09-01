@@ -57,6 +57,31 @@ html {
   box-shadow: 0 0 40px rgba(255, 30, 39, 0.4);
 }
 
+/* Red Border Lighting Animation for Graphic Section */
+@keyframes redBorderGlow {
+  0%, 100% {
+    border-color: rgba(255, 30, 39, 0.7);
+    box-shadow: 0 0 16px rgba(255, 30, 39, 0.5), inset 0 0 10px rgba(255, 30, 39, 0.2);
+  }
+  50% {
+    border-color: rgba(255, 30, 39, 1);
+    box-shadow: 0 0 32px rgba(255, 30, 39, 0.85), 0 0 60px rgba(255, 30, 39, 0.4), inset 0 0 16px rgba(255, 30, 39, 0.3);
+  }
+}
+
+.border-glow-active {
+  border-color: #FF1E27 !important;
+  animation: redBorderGlow 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Turn off red lighting when hovered */
+.border-glow-active:hover {
+  animation: none !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9) !important;
+}
+
 /* Infinite Marquee animations */
 @keyframes marquee {
   0% { transform: translateX(0%); }

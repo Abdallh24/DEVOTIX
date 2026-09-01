@@ -14,16 +14,9 @@ const CLIENTS = [
   { name: 'VOGUE', category: 'EDITORIAL' },
 ];
 
-const METRICS = [
-  { value: '150M+', label: 'GLOBAL IMPRESSIONS' },
-  { value: '85+', label: 'PRODUCTIONS DELIVERED' },
-  { value: '99.4%', label: 'CLIENT RETENTION' },
-  { value: '24', label: 'CREATIVE AWARDS' },
-];
-
 export default function Clients() {
   return (
-    <section id="clients" className="snap-section relative flex flex-col justify-center bg-[#09090b] text-white overflow-hidden border-y border-neutral-900 px-4 sm:px-6 lg:px-8 pt-16 pb-6">
+    <section id="clients" className="snap-section relative flex flex-col justify-center bg-[#09090b] text-white overflow-hidden border-y border-neutral-900 px-4 sm:px-6 lg:px-8 pt-16 pb-12">
       <div className="max-w-5xl mx-auto w-full">
         {/* Section Header */}
         <div className="flex flex-row items-center justify-between gap-3 mb-6 sm:mb-8">
@@ -77,20 +70,6 @@ export default function Clients() {
               ))}
             </div>
           </div>
-        </div>
-
-        {/* Stats & Trust Bar */}
-        <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-4 border-t border-neutral-900">
-          {METRICS.map((metric) => (
-            <div key={metric.label} className="text-center sm:text-left">
-              <p className="text-lg sm:text-xl lg:text-2xl font-black text-white font-display tracking-tight">
-                {metric.value}
-              </p>
-              <p className="text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase tracking-wider mt-0.5">
-                {metric.label}
-              </p>
-            </div>
-          ))}
         </div>
       </div>
     </section>

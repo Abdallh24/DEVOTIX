@@ -3,6 +3,8 @@ import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 import Footer from '../components/Footer';
 
 export default function SoftwareCaseStudyPage({
+  onBack,
+  onBackToHome,
   onBackToPortfolio,
   onOpenContact,
   onOpenPolicy,
@@ -19,13 +21,25 @@ export default function SoftwareCaseStudyPage({
     setStatus((prev) => (prev === 'COMPLETED' ? 'processing' : 'COMPLETED'));
   };
 
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else if (onBackToHome) {
+      onBackToHome('work');
+    } else if (onBackToPortfolio) {
+      onBackToPortfolio();
+    } else {
+      window.location.hash = '#work';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-brand-red selection:text-white pt-16 flex flex-col justify-between">
       <main className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-12 sm:space-y-16 flex-1">
         {/* Top: Back Link */}
         <div>
           <button
-            onClick={onBackToPortfolio}
+            onClick={handleBack}
             className="inline-flex items-center space-x-1.5 text-xs font-bold text-neutral-600 hover:text-brand-red transition-colors uppercase cursor-pointer group"
           >
             <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />

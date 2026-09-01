@@ -7,12 +7,12 @@ import React from 'react';
 export default function TitleAccent({ type, className = "" }) {
   switch (type) {
     case 'work':
-      // "WE LET THE WORK TALK."
+      // "SOFTWARE ENGINEERING PROJECTS"
       return (
-        <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black tracking-tight uppercase leading-tight ${className}`}>
-          W<span className="text-brand-red">E</span> LET T<span className="text-brand-red">H</span>E
+        <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black tracking-tight uppercase leading-tight font-display ${className}`}>
+          SOFTWARE <span className="text-brand-red">E</span>NGINEERING
           <br />
-          WO<span className="text-brand-red">R</span>K TA<span className="text-brand-red">L</span>K.
+          <span className="text-brand-red">P</span>ROJECTS.
         </h2>
       );
 
@@ -33,10 +33,18 @@ export default function TitleAccent({ type, className = "" }) {
       );
 
     case 'production':
-      // "OUR PRODUCTION"
+      // "VIDEOS"
       return (
-        <h2 className={`text-xl sm:text-2xl md:text-3xl font-black tracking-tight uppercase text-center ${className}`}>
-          OU<span className="text-brand-red">R</span> P<span className="text-brand-red">R</span>ODU<span className="text-brand-red">C</span>TI<span className="text-brand-red">O</span>N
+        <h2 className={`text-xl sm:text-2xl md:text-3xl font-black tracking-tight uppercase text-center font-display ${className}`}>
+          VID<span className="text-brand-red">E</span>OS
+        </h2>
+      );
+
+    case 'graphic':
+      // "GRAPHIC"
+      return (
+        <h2 className={`text-xl sm:text-2xl md:text-3xl font-black tracking-tight uppercase text-center font-display ${className}`}>
+          G<span className="text-brand-red">R</span>APHIC
         </h2>
       );
 

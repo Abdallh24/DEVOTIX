@@ -1,41 +1,49 @@
 import React, { useEffect } from 'react';
-import { X, ArrowUpRight, CheckCircle2, Award } from 'lucide-react';
+import { X, ArrowUpRight, ExternalLink } from 'lucide-react';
 
-export default function ProjectModal({ project, onClose, onOpenContact }) {
+export default function ProjectModal({ project, onClose, onOpenContact, onNavigateSoftwareEngineering }) {
+  if (!project) return null;
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
     };
-    if (project) {
-      window.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    }
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'unset';
-    };
-  }, [project, onClose]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
-  if (!project) return null;
+  const handleRequestSimilar = () => {
+    onClose();
+    if (onNavigateSoftwareEngineering) {
+      onNavigateSoftwareEngineering();
+    } else {
+      window.location.hash = '#software-engineering';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-black/90 backdrop-blur-xl animate-fadeIn">
-      <div className="absolute inset-0" onClick={onClose} />
-
-      <div className="relative z-10 w-full max-w-4xl bg-neutral-950 border border-neutral-800 rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
-        {/* Modal Top Bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-800 bg-neutral-900/60">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-fadeIn"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-2xl bg-neutral-950 border border-neutral-800 rounded-2xl overflow-hidden shadow-2xl animate-scaleUp text-white"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header Bar */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-800/80 bg-black/40">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-red">
-              CASE STUDY
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">
+              PROJECT SHOWCASE
             </span>
-            <h3 className="text-xl font-black uppercase tracking-tight text-white font-display">
+            <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight text-white font-display">
               {project.title}
-            </h3>
+            </h2>
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-neutral-800 hover:bg-brand-red hover:text-white text-neutral-400 flex items-center justify-center transition-colors"
+            className="p-1.5 rounded-full bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-white transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -43,43 +51,31 @@ export default function ProjectModal({ project, onClose, onOpenContact }) {
         </div>
 
         {/* Modal Body */}
-        <div className="overflow-y-auto p-6 sm:p-8 space-y-6">
-          {/* Main Image */}
-          <div className="rounded-xl overflow-hidden border border-neutral-800 bg-black">
+        <div className="p-6 space-y-6 max-h-[80vh] overflow-y-auto">
+          {/* Main Visual */}
+          <div className="relative aspect-video rounded-xl overflow-hidden bg-neutral-900 border border-neutral-800/80">
             <img
               src={project.image}
               alt={project.title}
-              className="w-full h-auto object-cover max-h-[460px]"
+              className="w-full h-full object-cover object-center"
             />
           </div>
 
-          {/* Details */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-neutral-900">
-            <div className="md:col-span-2 space-y-4">
-              <h4 className="text-lg font-black uppercase text-white font-display">
-                Executive Overview
-              </h4>
-              <p className="text-sm text-neutral-300 leading-relaxed font-normal">
-                {project.description}
+          {/* Description & Details Split */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+            {/* Left Col: Overview */}
+            <div className="md:col-span-7 space-y-3">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
+                OVERVIEW
+              </span>
+              <p className="text-xs text-neutral-300 leading-relaxed font-medium">
+                {project.description ||
+                  'Comprehensive digital architecture and creative execution engineered to transform digital identity and drive measurable business performance.'}
               </p>
-              <div className="space-y-2 pt-2">
-                <div className="flex items-center space-x-2 text-xs text-neutral-300">
-                  <CheckCircle2 className="w-4 h-4 text-brand-red flex-shrink-0" />
-                  <span>340% increase in digital engagement within first 60 days</span>
-                </div>
-                <div className="flex items-center space-x-2 text-xs text-neutral-300">
-                  <CheckCircle2 className="w-4 h-4 text-brand-red flex-shrink-0" />
-                  <span>Bespoke custom UI design and seamless 60fps WebGL animations</span>
-                </div>
-                <div className="flex items-center space-x-2 text-xs text-neutral-300">
-                  <CheckCircle2 className="w-4 h-4 text-brand-red flex-shrink-0" />
-                  <span>Featured on Awwwards Site of the Day and FWA of the Month</span>
-                </div>
-              </div>
             </div>
 
-            {/* Project Specs */}
-            <div className="space-y-4 bg-neutral-900/50 p-5 rounded-xl border border-neutral-800/80">
+            {/* Right Col: Project Specs & Action */}
+            <div className="md:col-span-5 space-y-4 bg-neutral-900/50 p-4 sm:p-5 rounded-xl border border-neutral-800/80">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 block">
                   CATEGORY
@@ -95,7 +91,7 @@ export default function ProjectModal({ project, onClose, onOpenContact }) {
                 </span>
                 <div className="flex flex-wrap gap-1.5 mt-1.5">
                   {project.tags?.map((t) => (
-                    <span key={t} className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-neutral-800 text-neutral-300">
+                    <span key={t} className="text-[9.5px] font-semibold uppercase px-2 py-0.5 rounded bg-neutral-800 text-neutral-300">
                       {t}
                     </span>
                   ))}
@@ -104,11 +100,8 @@ export default function ProjectModal({ project, onClose, onOpenContact }) {
 
               <div className="pt-2">
                 <button
-                  onClick={() => {
-                    onClose();
-                    onOpenContact();
-                  }}
-                  className="w-full py-2.5 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded transition-colors flex items-center justify-center space-x-1.5"
+                  onClick={handleRequestSimilar}
+                  className="w-full py-2.5 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded transition-all duration-200 flex items-center justify-center space-x-1.5 cursor-pointer shadow-md shadow-red-600/30 transform hover:scale-[1.02]"
                 >
                   <span>REQUEST SIMILAR WORK</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />

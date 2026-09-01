@@ -1,7 +1,20 @@
 import React from 'react';
-import { ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronDown, Play } from 'lucide-react';
 
-export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork }) {
+export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork, onPlayVideo }) {
+  const handlePlayShowreel = () => {
+    if (onPlayVideo) {
+      onPlayVideo({
+        id: 'devotix-hero-showreel',
+        title: 'DEVOTIX SHOWREEL 2026',
+        category: 'COMMERCIAL PRODUCTION • 3D CGI',
+        duration: '02:45',
+        image: '/assets/production/featured-car.png',
+        description: 'Experience our 2026 director showreel featuring cinematic commercial productions and 3D VFX simulations.'
+      });
+    }
+  };
+
   return (
     <section
       id="home"
@@ -27,14 +40,6 @@ export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork })
 
       {/* Hero Content */}
       <div className="relative z-10 max-w-3xl mx-auto text-center flex flex-col items-center my-auto">
-        {/* Small top red category badge with Devotix Logo */}
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-red/10 border border-brand-red/30 mb-4 backdrop-blur-sm">
-          <img src="/favicon.png" alt="Devotix Icon" className="w-3.5 h-3.5 object-contain" />
-          <span className="text-[10px] font-bold tracking-widest uppercase text-brand-red">
-            CREATIVE MEDIA AGENCY
-          </span>
-        </div>
-
         {/* Scaled-down Sleek Headline */}
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight uppercase leading-[1.05] text-white font-display">
           MAKE YOUR BRAND
@@ -47,15 +52,15 @@ export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork })
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-4 max-w-lg text-[11px] sm:text-xs text-neutral-400 font-medium tracking-wide uppercase leading-relaxed text-center px-4">
+        <p className="mt-3 max-w-lg text-[11px] sm:text-xs text-neutral-400 font-medium tracking-wide uppercase leading-relaxed text-center px-4">
           WE ARE A FULL-SERVICE CREATIVE MEDIA AGENCY DRIVEN BY DATA, CRAFTED WITH PASSION, AND COMMITTED TO MAKING BRANDS UNFORGETTABLE.
         </p>
 
         {/* Two Call-to-Action Buttons */}
-        <div className="mt-6 sm:mt-8 flex flex-row items-center gap-3 w-auto justify-center">
+        <div className="mt-5 sm:mt-6 flex flex-row items-center gap-3 w-auto justify-center">
           <button
-            onClick={onOpenPortfolio}
-            className="px-5 py-2 bg-brand-red hover:bg-brand-redHover text-white text-[11px] font-bold uppercase tracking-wider rounded-md transition-all duration-300 transform hover:scale-105 shadow-md shadow-red-600/30 flex items-center justify-center space-x-1.5"
+            onClick={onScrollToWork}
+            className="px-5 py-2 bg-brand-red hover:bg-brand-redHover text-white text-[11px] font-bold uppercase tracking-wider rounded-md transition-all duration-300 transform hover:scale-105 shadow-md shadow-red-600/30 flex items-center justify-center space-x-1.5 cursor-pointer"
           >
             <span>EXPLORE OUR PORTFOLIO</span>
             <ArrowRight className="w-3 h-3" />
@@ -63,11 +68,46 @@ export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork })
 
           <button
             onClick={onOpenContact}
-            className="px-5 py-2 bg-transparent hover:bg-white/10 text-white border border-white/40 hover:border-white text-[11px] font-bold uppercase tracking-wider rounded-md transition-all duration-300 backdrop-blur-sm flex items-center justify-center space-x-1.5 group"
+            className="px-5 py-2 bg-transparent hover:bg-white/10 text-white border border-white/40 hover:border-white text-[11px] font-bold uppercase tracking-wider rounded-md transition-all duration-300 backdrop-blur-sm flex items-center justify-center space-x-1.5 group cursor-pointer"
           >
             <span>LET'S TALK</span>
             <ArrowUpRight className="w-3 h-3 text-white group-hover:scale-110 transition-transform" />
           </button>
+        </div>
+
+        {/* Small Video after EXPLORE OUR PORTFOLIO button */}
+        <div
+          onClick={handlePlayShowreel}
+          className="mt-5 relative w-full max-w-[240px] sm:max-w-[280px] aspect-[16/9] rounded-xl overflow-hidden border border-neutral-800 hover:border-brand-red/80 shadow-[0_10px_30px_rgba(0,0,0,0.8)] cursor-pointer group transition-all duration-300 transform hover:scale-105"
+        >
+          <img
+            src="/assets/production/featured-car.png"
+            alt="Devotix Showreel Preview"
+            className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+
+          {/* Central Pulsing Play Button */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-brand-red text-white flex items-center justify-center shadow-lg shadow-red-600/50 group-hover:scale-110 transition-transform">
+              <Play className="w-4 h-4 fill-white translate-x-0.5" />
+            </div>
+          </div>
+
+          {/* Top/Bottom Badges */}
+          <div className="absolute top-2 left-2 pointer-events-none">
+            <span className="px-2 py-0.5 bg-black/70 backdrop-blur-md rounded-full text-[8px] font-extrabold uppercase tracking-widest text-white border border-white/10">
+              4K REEL
+            </span>
+          </div>
+          <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+            <span className="text-[9px] font-extrabold uppercase tracking-wider text-white">
+              WATCH SHOWREEL
+            </span>
+            <span className="text-[8.5px] font-mono text-neutral-300">
+              02:45
+            </span>
+          </div>
         </div>
       </div>
 

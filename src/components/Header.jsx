@@ -5,8 +5,7 @@ const NAV_LINKS = [
   { name: 'HOME', href: '#home', type: 'anchor' },
   { name: 'CLIENTS', href: '#clients', type: 'anchor' },
   { name: 'SERVICES', href: '#services', type: 'anchor' },
-  { name: 'PORTFOLIO', href: '#portfolio', type: 'portfolio' },
-  { name: 'CAREER', href: '#career', type: 'career' },
+  { name: 'JOIN US', href: '#career', type: 'career' },
   { name: 'ABOUT US', href: '#about', type: 'about' },
   { name: 'CONTACT US', href: '#contact', type: 'contact' },
 ];
@@ -15,7 +14,6 @@ export default function Header({
   onOpenContact,
   onOpenCareer,
   onOpenAbout,
-  onNavigatePortfolio,
   onNavigateSoftwareEngineering,
   onNavigateAbout,
   onNavigateCareer,
@@ -40,7 +38,7 @@ export default function Header({
       }
 
       if (currentPage === 'home') {
-        const sections = ['home', 'clients', 'services', 'work', 'production', 'photography', 'cta'];
+        const sections = ['home', 'work', 'clients', 'graphic', 'production', 'photography', 'services'];
         const scrollPosition = window.scrollY + 160;
 
         for (const sectionId of sections) {
@@ -65,15 +63,6 @@ export default function Header({
   const handleNavClick = (e, link) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-
-    if (link.type === 'portfolio') {
-      if (currentPage === 'portfolio') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        onNavigatePortfolio && onNavigatePortfolio();
-      }
-      return;
-    }
 
     if (link.type === 'about') {
       if (currentPage === 'about') {
@@ -173,15 +162,13 @@ export default function Header({
           <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6 2xl:space-x-7 flex-nowrap overflow-hidden">
             {NAV_LINKS.map((link) => {
               const targetSection = link.href.replace('#', '');
-              const isActive = (currentPage === 'portfolio' || currentPage === 'project-view' || currentPage === 'software-engineering')
-                ? link.type === 'portfolio'
-                : currentPage === 'about'
-                  ? link.type === 'about'
-                  : (currentPage === 'career' || currentPage === 'job-apply' || currentPage === 'send-cv')
-                    ? link.type === 'career'
-                    : currentPage === 'contact'
-                      ? link.type === 'contact'
-                      : link.type === 'anchor' && activeSection === targetSection;
+              const isActive = currentPage === 'about'
+                ? link.type === 'about'
+                : (currentPage === 'career' || currentPage === 'job-apply' || currentPage === 'send-cv')
+                  ? link.type === 'career'
+                  : currentPage === 'contact'
+                    ? link.type === 'contact'
+                    : link.type === 'anchor' && activeSection === targetSection;
 
               return (
                 <a
@@ -229,15 +216,13 @@ export default function Header({
           <div className="lg:hidden bg-white border-t border-neutral-200 px-5 pt-3 pb-5 space-y-1.5 animate-fadeIn max-h-[80vh] overflow-y-auto">
             {NAV_LINKS.map((link) => {
               const targetSection = link.href.replace('#', '');
-              const isActive = (currentPage === 'portfolio' || currentPage === 'project-view' || currentPage === 'software-engineering')
-                ? link.type === 'portfolio'
-                : currentPage === 'about'
-                  ? link.type === 'about'
-                  : (currentPage === 'career' || currentPage === 'job-apply' || currentPage === 'send-cv')
-                    ? link.type === 'career'
-                    : currentPage === 'contact'
-                      ? link.type === 'contact'
-                      : link.type === 'anchor' && activeSection === targetSection;
+              const isActive = currentPage === 'about'
+                ? link.type === 'about'
+                : (currentPage === 'career' || currentPage === 'job-apply' || currentPage === 'send-cv')
+                  ? link.type === 'career'
+                  : currentPage === 'contact'
+                    ? link.type === 'contact'
+                    : link.type === 'anchor' && activeSection === targetSection;
 
               return (
                 <a
