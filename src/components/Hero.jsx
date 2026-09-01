@@ -62,7 +62,7 @@ export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork, o
             onClick={onScrollToWork}
             className="px-5 py-2 bg-brand-red hover:bg-brand-redHover text-white text-[11px] font-bold uppercase tracking-wider rounded-md transition-all duration-300 transform hover:scale-105 shadow-md shadow-red-600/30 flex items-center justify-center space-x-1.5 cursor-pointer"
           >
-            <span>EXPLORE OUR PORTFOLIO</span>
+            <span>EXPLORE OUR PROJECTS</span>
             <ArrowRight className="w-3 h-3" />
           </button>
 
