@@ -41,12 +41,12 @@ export default function Clients() {
           <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-16 bg-gradient-to-l from-neutral-950 to-transparent z-10 pointer-events-none" />
 
           {/* Marquee Row 1 */}
-          <div className="flex overflow-hidden py-1.5 select-none">
-            <div className="animate-marquee flex items-center space-x-8 sm:space-x-12">
+          <div className="flex overflow-hidden py-1.5 select-none marquee-container">
+            <div className="animate-marquee flex items-center space-x-8 sm:space-x-12 hover:[animation-play-state:paused]">
               {[...CLIENTS, ...CLIENTS].map((client, idx) => (
                 <div
                   key={`${client.name}-${idx}`}
-                  className="flex flex-col items-center justify-center min-w-[90px] sm:min-w-[120px] group transition-all duration-300"
+                  className="flex flex-col items-center justify-center min-w-[90px] sm:min-w-[120px] group transition-all duration-300 cursor-pointer"
                 >
                   <span className="text-sm sm:text-lg lg:text-xl font-black tracking-widest uppercase text-neutral-400 group-hover:text-white group-hover:scale-105 transition-all font-display">
                     {client.name}
@@ -60,12 +60,12 @@ export default function Clients() {
           </div>
 
           {/* Marquee Row 2 (Reverse) */}
-          <div className="flex overflow-hidden py-1.5 mt-3 select-none border-t border-neutral-900/60">
-            <div className="animate-marquee-reverse flex items-center space-x-8 sm:space-x-12">
+          <div className="flex overflow-hidden py-1.5 mt-3 select-none border-t border-neutral-900/60 marquee-container">
+            <div className="animate-marquee-reverse flex items-center space-x-8 sm:space-x-12 hover:[animation-play-state:paused]">
               {[...CLIENTS.slice().reverse(), ...CLIENTS.slice().reverse()].map((client, idx) => (
                 <div
                   key={`${client.name}-rev-${idx}`}
-                  className="flex flex-col items-center justify-center min-w-[90px] sm:min-w-[120px] group transition-all duration-300"
+                  className="flex flex-col items-center justify-center min-w-[90px] sm:min-w-[120px] group transition-all duration-300 cursor-pointer"
                 >
                   <span className="text-sm sm:text-lg lg:text-xl font-black tracking-widest uppercase text-neutral-500 group-hover:text-white group-hover:scale-105 transition-all font-display">
                     {client.name}

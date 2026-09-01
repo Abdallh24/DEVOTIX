@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import HomeVideoSection from './components/HomeVideoSection';
 import Work from './components/Work';
 import Clients from './components/Clients';
 import Services from './components/Services';
@@ -238,6 +239,9 @@ export default function App() {
               onOpenContact={navigateToContact}
               onScrollToWork={scrollToWork}
             />
+
+            {/* 2.5 Featured Agency Showreel Video Section (id="showreel") */}
+            <HomeVideoSection onPlayVideo={(video) => setActiveVideo(video)} />
 
             {/* 3. Our Work Section (id="work") */}
             <Work onSelectProject={(project) => setSelectedProject(project)} />

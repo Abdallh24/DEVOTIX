@@ -7,6 +7,7 @@ export default function RightSlideBar({ currentPage = 'home' }) {
   const pageSections = {
     home: [
       { id: 'home', label: 'Home' },
+      { id: 'showreel', label: 'Showreel' },
       { id: 'work', label: 'Our Work' },
       { id: 'clients', label: 'Clients' },
       { id: 'services', label: 'Services' },

@@ -74,8 +74,8 @@ export default function AboutPage({ onBackToHome, onOpenContact, onOpenPolicy })
         </div>
       </section>
 
-      {/* 2. Metrics Banner Section + Footer (Full Screen View) */}
-      <section id="about-metrics" className="snap-section min-h-screen flex flex-col justify-between px-4 sm:px-6 lg:px-8 bg-white text-black pt-16 pb-0 overflow-hidden">
+      {/* 2. Metrics Banner Section */}
+      <section id="about-metrics" className="min-h-screen flex flex-col justify-center px-6 sm:px-10 lg:px-16 bg-white text-black pt-16 pb-12">
         <div className="max-w-6xl mx-auto w-full my-auto py-8">
           <div className="mb-6 text-center sm:text-left">
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">
@@ -100,10 +100,10 @@ export default function AboutPage({ onBackToHome, onOpenContact, onOpenPolicy })
             ))}
           </div>
         </div>
-
-        {/* Embedded Consistent White Footer */}
-        <Footer onOpenPolicy={onOpenPolicy} />
       </section>
+
+      {/* 3. Full-Width Pure White Footer */}
+      <Footer onOpenPolicy={onOpenPolicy} />
     </div>
   );
 }

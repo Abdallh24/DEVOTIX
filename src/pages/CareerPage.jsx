@@ -90,59 +90,66 @@ export default function CareerPage({
 
   return (
     <div className="bg-white text-black font-sans selection:bg-brand-red selection:text-white">
-      {/* 1. Hero Section (White Background) - Fits Full Screen View */}
-      <section id="career-hero" className="snap-section min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white text-black pt-16 pb-6">
-        <div className="max-w-6xl mx-auto w-full my-auto py-2">
-          {/* Back Button */}
-          <div className="mb-3 sm:mb-4">
+      {/* 1. Hero Section (White Background) */}
+      <section id="career-hero" className="min-h-screen flex flex-col justify-center px-6 sm:px-10 lg:px-16 bg-white text-black pt-20 pb-12">
+        <div className="max-w-6xl mx-auto w-full my-auto">
+          {/* Back Link */}
+          <div className="mb-10">
             <button
               onClick={onBackToHome}
-              className="inline-flex items-center space-x-1.5 text-xs font-bold text-neutral-600 hover:text-brand-red transition-colors uppercase group cursor-pointer"
+              className="inline-flex items-center space-x-1.5 text-sm font-semibold text-neutral-800 hover:text-brand-red transition-colors cursor-pointer group"
             >
-              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-              <span>Back to Home</span>
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              <span>Back</span>
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-14 items-center">
             {/* Left Column: Content */}
             <div className="md:col-span-7">
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-2">
-                JOIN THE TEAM
+              <span className="text-xs sm:text-sm font-extrabold uppercase tracking-[0.2em] text-neutral-500 block mb-6">
+                DEVOITX MEDIA / CAREERS
               </span>
 
-              <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-black font-display leading-[1.03] mb-4 sm:mb-5">
+              <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[96px] font-black uppercase tracking-tight text-black font-display leading-[0.94] mb-8">
                 BUILD WHAT'S
                 <br />
                 NEXT WITH US.
               </h1>
 
-              <p className="text-xs sm:text-sm text-neutral-600 font-medium leading-relaxed max-w-lg mb-6 sm:mb-8">
-                We bring together strategists, creatives, marketers, producers, designers and technologists to build work that moves brands forward.
-              </p>
+              {/* Description Block with Left Red Vertical Line */}
+              <div className="border-l-2 border-brand-red pl-6 sm:pl-8 py-1 space-y-4 mb-10 max-w-2xl">
+                <p className="text-base sm:text-xl md:text-2xl text-[#4b5563] font-normal leading-relaxed">
+                  We bring together strategists, creatives, marketers, producers, designers and technologists to build work that moves brands forward.
+                </p>
+                <p className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-black">
+                  CREATIVE MINDS. DIFFERENT DISCIPLINES. ONE TEAM.
+                </p>
+              </div>
 
-              <div className="flex flex-wrap items-center gap-3">
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6">
                 <button
-                  onClick={scrollToRoles}
-                  className="px-6 py-3 bg-black hover:bg-neutral-800 text-white text-xs font-extrabold uppercase tracking-wider rounded transition-all duration-200 shadow-md flex items-center space-x-2 cursor-pointer"
+                  onClick={onNavigateSendCv}
+                  className="px-8 sm:px-10 py-4 bg-[#111113] hover:bg-neutral-800 text-white text-xs sm:text-sm font-extrabold uppercase tracking-widest rounded-md shadow-md flex items-center space-x-2 transition-all cursor-pointer"
                 >
-                  <span>VIEW OPEN ROLES</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>SEND YOUR CV</span>
+                  <ArrowUpRight className="w-4 h-4" />
                 </button>
 
                 <button
-                  onClick={onNavigateSendCv}
-                  className="px-5 py-3 border border-neutral-300 hover:border-black text-black text-xs font-extrabold uppercase tracking-wider rounded transition-all duration-200 flex items-center space-x-2 cursor-pointer"
+                  onClick={scrollToRoles}
+                  className="px-8 sm:px-10 py-4 bg-white border border-neutral-300 hover:border-black text-black text-xs sm:text-sm font-extrabold uppercase tracking-widest rounded-md shadow-sm flex items-center space-x-2 transition-all cursor-pointer"
                 >
-                  <span>SEND GENERAL CV</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
+                  <span>VIEW OPEN ROLES</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
             {/* Right Column: Tall Vertical Portrait Photo */}
             <div className="md:col-span-5 flex justify-center md:justify-end">
-              <div className="relative w-full max-w-[320px] aspect-[9/15] max-h-[380px] sm:max-h-[440px] rounded-xl overflow-hidden border border-neutral-200 shadow-lg bg-neutral-100">
+              <div className="relative w-full max-w-[360px] aspect-[9/15] max-h-[480px] sm:max-h-[540px] rounded-2xl overflow-hidden border border-neutral-200 shadow-xl bg-neutral-100">
                 <img
                   src="/assets/career/career-hero.png"
                   alt="Devotix Media Team Collaboration"
@@ -342,8 +349,8 @@ export default function CareerPage({
         </div>
       </section>
 
-      {/* 4. Perks & Benefits Section (Dark Charcoal Background) + Footer - Fits Full Screen View */}
-      <section id="career-perks" className="snap-section min-h-screen flex flex-col justify-between px-4 sm:px-6 lg:px-8 bg-[#0c0c0e] text-white pt-16 pb-0 overflow-hidden">
+      {/* 4. Perks & Benefits Section (Dark Charcoal Background) */}
+      <section id="career-perks" className="min-h-screen flex flex-col justify-center px-6 sm:px-10 lg:px-16 bg-[#0c0c0e] text-white pt-16 pb-12">
         <div className="max-w-6xl mx-auto w-full my-auto py-8">
           <div className="mb-8 text-center sm:text-left">
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">
@@ -401,10 +408,10 @@ export default function CareerPage({
             </div>
           </div>
         </div>
-
-        {/* Embedded Consistent White Footer */}
-        <Footer onOpenPolicy={onOpenPolicy} />
       </section>
+
+      {/* 5. Full-Width Pure White Footer */}
+      <Footer onOpenPolicy={onOpenPolicy} />
     </div>
   );
 }

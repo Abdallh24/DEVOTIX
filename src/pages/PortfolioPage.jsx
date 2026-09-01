@@ -150,46 +150,55 @@ export default function PortfolioPage({
 
   return (
     <div className="bg-white text-black font-sans selection:bg-brand-red selection:text-white">
-      {/* 1. Hero Section (White Background) */}
-      <section id="port-hero" className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white text-black pt-16 pb-8">
-        <div className="max-w-5xl mx-auto w-full my-auto">
-          {/* Back Button */}
-          <button
-            onClick={onBackToHome}
-            className="inline-flex items-center space-x-1 text-xs font-bold text-neutral-600 hover:text-brand-red transition-colors uppercase mb-3 sm:mb-4 group"
-          >
-            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-            <span>Back to Home</span>
-          </button>
+      {/* ========================================================================= */}
+      {/* 1. HERO SECTION (Exact Typography, Scale & Positioning matching reference) */}
+      {/* ========================================================================= */}
+      <section id="port-hero" className="min-h-screen flex flex-col justify-center px-6 sm:px-10 lg:px-16 bg-white text-black pt-20 pb-12">
+        <div className="max-w-6xl mx-auto w-full my-auto">
+          {/* Back Link */}
+          <div className="mb-8">
+            <button
+              onClick={onBackToHome}
+              className="inline-flex items-center space-x-1.5 text-sm font-semibold text-neutral-800 hover:text-brand-red transition-colors cursor-pointer group"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              <span>Back</span>
+            </button>
+          </div>
 
           {/* Eyebrow */}
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1.5">
-            DEVOITX MEDIA PORTFOLIO
+          <span className="text-xs sm:text-sm font-extrabold uppercase tracking-[0.2em] text-brand-red block mb-4">
+            DEVOITX MEDIA / PORTFOLIO
           </span>
 
           {/* Massive Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[1.05] font-display">
+          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[96px] font-black uppercase tracking-tight text-black leading-[0.96] font-display">
             OUR WORK SAYS
             <br />
             MORE.
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-3 text-xs sm:text-sm text-neutral-600 font-medium max-w-xl leading-relaxed">
-            A showcase of brands, campaigns, digital experiences, media, and engineering built by DEVOITX MEDIA.
+          <p className="mt-6 text-base sm:text-xl md:text-2xl text-[#4b5563] font-normal max-w-3xl leading-relaxed">
+            A collection of brands, campaigns, digital experiences and creative work built by DEVOITX MEDIA.
           </p>
 
           {/* Divider */}
-          <div className="w-full h-[1px] bg-neutral-200 my-5 sm:my-6" />
+          <div className="w-full h-[1px] bg-neutral-200 my-8 sm:my-10" />
+
+          {/* Capabilities Sub-row */}
+          <div className="text-xs sm:text-[13px] font-bold uppercase tracking-[0.22em] text-neutral-400 mb-8">
+            STRATEGY / CREATIVE / MEDIA / PRODUCTION / TECHNOLOGY / GROWTH
+          </div>
 
           {/* Two Elevated Rectangular Buttons (Media & Digital Marketing / Software Engineering) */}
-          <div className="flex flex-wrap items-center gap-3.5 sm:gap-5">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
             {/* Left Button: Media & Digital Marketing */}
             <button
               onClick={() => setActiveTab('media')}
-              className={`px-5 sm:px-7 py-3 sm:py-3.5 bg-white rounded-md transition-all duration-200 cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.06)] border border-neutral-100 text-xs sm:text-sm font-medium ${
+              className={`px-7 sm:px-9 py-3.5 sm:py-4 bg-white rounded-lg transition-all duration-200 cursor-pointer shadow-[0_6px_20px_rgba(0,0,0,0.06)] border border-neutral-100/90 text-sm sm:text-base font-semibold ${
                 activeTab === 'media'
-                  ? 'text-brand-red ring-1 ring-brand-red/30 shadow-[0_6px_20px_rgba(255,30,39,0.08)]'
+                  ? 'text-brand-red ring-1 ring-brand-red/30 shadow-[0_8px_25px_rgba(255,30,39,0.1)] scale-[1.01]'
                   : 'text-[#1e293b] hover:text-brand-red'
               }`}
             >
@@ -205,7 +214,7 @@ export default function PortfolioPage({
                   setActiveTab('software');
                 }
               }}
-              className="px-5 sm:px-7 py-3 sm:py-3.5 bg-white rounded-md transition-all duration-200 cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.06)] border border-neutral-100 text-xs sm:text-sm font-medium text-brand-red ring-1 ring-brand-red/30 shadow-[0_6px_20px_rgba(255,30,39,0.08)] hover:scale-[1.02]"
+              className="px-7 sm:px-9 py-3.5 sm:py-4 bg-white rounded-lg transition-all duration-200 cursor-pointer shadow-[0_6px_20px_rgba(0,0,0,0.06)] border border-neutral-100/90 text-sm sm:text-base font-semibold text-brand-red ring-1 ring-brand-red/30 shadow-[0_8px_25px_rgba(255,30,39,0.1)] hover:scale-[1.02]"
             >
               Software Engineering
             </button>
@@ -214,31 +223,31 @@ export default function PortfolioPage({
       </section>
 
       {/* 2. Featured Case Study (Dark Charcoal Background) */}
-      <section id="port-featured" className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-[#0c0c0e] text-white pt-16 pb-8">
-        <div className="max-w-5xl mx-auto w-full my-auto">
+      <section id="port-featured" className="min-h-screen flex flex-col justify-center px-6 sm:px-10 lg:px-16 bg-[#0c0c0e] text-white pt-16 pb-12">
+        <div className="max-w-6xl mx-auto w-full my-auto">
           {/* Eyebrow */}
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">
+          <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red block mb-2">
             FEATURED {activeTab === 'software' ? 'SOFTWARE ENGINEERING' : 'MEDIA & MARKETING'} CASE STUDY
           </span>
 
           {/* Headline */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight text-white font-display leading-tight max-w-2xl">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-white font-display leading-tight max-w-2xl">
             A PROJECT WORTH A CLOSER
             <br />
             LOOK.
           </h2>
 
           {/* Subtitle */}
-          <p className="mt-2 text-xs sm:text-sm text-neutral-400 font-medium max-w-xl leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-neutral-400 font-medium max-w-xl leading-relaxed">
             {featuredProject.subtitle}
           </p>
 
           {/* Featured Large Media Card */}
           <div
             onClick={() => handleOpenDetail(featuredProject)}
-            className="mt-6 sm:mt-8 group relative rounded-xl overflow-hidden bg-neutral-900 border border-neutral-800 cursor-pointer transition-all duration-300 hover:border-brand-red/50 shadow-2xl"
+            className="mt-8 group relative rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-800 cursor-pointer transition-all duration-300 hover:border-brand-red/50 shadow-2xl"
           >
-            <div className="aspect-[16/8] max-h-[340px] sm:max-h-[380px] w-full overflow-hidden relative">
+            <div className="aspect-[16/8] max-h-[380px] sm:max-h-[440px] w-full overflow-hidden relative">
               <img
                 src={featuredProject.image}
                 alt={featuredProject.title}
@@ -248,21 +257,21 @@ export default function PortfolioPage({
             </div>
 
             {/* Bottom Floating Bar on Card */}
-            <div className="p-4 sm:p-6 bg-neutral-950 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-t border-neutral-800">
+            <div className="p-5 sm:p-7 bg-neutral-950 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-neutral-800">
               <div>
                 <div className="flex items-center space-x-2">
-                  <span className="text-[9px] font-extrabold uppercase tracking-wider text-emerald-400">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-400">
                     ● {featuredProject.status}
                   </span>
                   <span className="text-neutral-600">•</span>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-neutral-400">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
                     {activeTab === 'software' ? 'TECH STACK' : 'PRODUCTION'}
                   </span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-white font-display mt-0.5 group-hover:text-brand-red transition-colors">
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white font-display mt-1 group-hover:text-brand-red transition-colors">
                   {featuredProject.title}
                 </h3>
-                <p className="text-xs text-neutral-400 font-medium mt-0.5 line-clamp-1">
+                <p className="text-sm text-neutral-400 font-medium mt-1 line-clamp-1">
                   {featuredProject.category}
                 </p>
               </div>
@@ -272,10 +281,10 @@ export default function PortfolioPage({
                   e.stopPropagation();
                   handleOpenDetail(featuredProject);
                 }}
-                className="px-4 py-2 bg-brand-red hover:bg-brand-redHover text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded transition-all duration-200 transform hover:scale-105 shadow-md shadow-red-600/30 flex items-center space-x-1.5 flex-shrink-0"
+                className="px-5 py-2.5 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded transition-all duration-200 transform hover:scale-105 shadow-md shadow-red-600/30 flex items-center space-x-2 flex-shrink-0"
               >
                 <span>VIEW CASE STUDY</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -283,26 +292,26 @@ export default function PortfolioPage({
       </section>
 
       {/* 3. Project Grid Section (White Background) */}
-      <section id="port-grid" className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white text-black pt-16 pb-8">
-        <div className="max-w-5xl mx-auto w-full my-auto">
-          <div className="mb-4">
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">
+      <section id="port-grid" className="min-h-screen flex flex-col justify-center px-6 sm:px-10 lg:px-16 bg-white text-black pt-16 pb-12">
+        <div className="max-w-6xl mx-auto w-full my-auto">
+          <div className="mb-6">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red block mb-1">
               PORTFOLIO ARCHIVE
             </span>
-            <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-black font-display">
+            <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-black font-display">
               {activeTab === 'software' ? 'SOFTWARE & DIGITAL SYSTEMS' : 'MEDIA, CAMPAIGNS & BRANDING'}
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {activeProjects.map((project) => (
               <div
                 key={project.id}
                 onClick={() => handleOpenDetail(project)}
-                className="group cursor-pointer flex flex-col p-2.5 rounded-lg border border-neutral-200 hover:border-brand-red/40 hover:shadow-md transition-all bg-white"
+                className="group cursor-pointer flex flex-col p-3 rounded-xl border border-neutral-200 hover:border-brand-red/40 hover:shadow-lg transition-all bg-white"
               >
                 {/* Project Image */}
-                <div className="relative aspect-[16/9] max-h-[110px] sm:max-h-[130px] rounded overflow-hidden bg-neutral-100">
+                <div className="relative aspect-[16/9] max-h-[140px] sm:max-h-[160px] rounded-lg overflow-hidden bg-neutral-100">
                   <img
                     src={project.image}
                     alt={project.title}
@@ -311,20 +320,20 @@ export default function PortfolioPage({
                 </div>
 
                 {/* Project Info */}
-                <div className="mt-2 flex flex-col flex-1">
+                <div className="mt-3 flex flex-col flex-1">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xs sm:text-sm font-black uppercase tracking-tight text-black font-display group-hover:text-brand-red transition-colors">
+                    <h3 className="text-sm sm:text-base font-black uppercase tracking-tight text-black font-display group-hover:text-brand-red transition-colors">
                       {project.title}
                     </h3>
                   </div>
 
-                  <p className="text-[10px] text-neutral-600 font-medium leading-tight line-clamp-1 mt-0.5">
+                  <p className="text-xs text-neutral-600 font-medium leading-relaxed line-clamp-1 mt-1">
                     {project.description}
                   </p>
 
                   {/* Bottom row: Tags + Button */}
-                  <div className="mt-2 pt-1.5 border-t border-neutral-100 flex items-center justify-between gap-2">
-                    <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-neutral-500 truncate max-w-[170px]">
+                  <div className="mt-3 pt-2 border-t border-neutral-100 flex items-center justify-between gap-2">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 truncate max-w-[200px]">
                       {project.category}
                     </span>
 
@@ -333,10 +342,10 @@ export default function PortfolioPage({
                         e.stopPropagation();
                         handleOpenDetail(project);
                       }}
-                      className="px-2.5 py-1 bg-brand-red hover:bg-brand-redHover text-white text-[9px] font-bold uppercase tracking-wider rounded transition-colors flex items-center space-x-1 flex-shrink-0"
+                      className="px-3 py-1.5 bg-brand-red hover:bg-brand-redHover text-white text-[10px] font-bold uppercase tracking-wider rounded transition-colors flex items-center space-x-1 flex-shrink-0"
                     >
                       <span>View</span>
-                      <ArrowRight className="w-2.5 h-2.5" />
+                      <ArrowRight className="w-3 h-3" />
                     </button>
                   </div>
                 </div>
@@ -346,16 +355,16 @@ export default function PortfolioPage({
         </div>
       </section>
 
-      {/* 4. Pre-Footer Call to Action + Footer (White Background) */}
-      <section id="port-cta" className="min-h-screen flex flex-col justify-between px-4 sm:px-6 lg:px-8 bg-white text-black pt-16 pb-0 overflow-hidden">
-        <div className="max-w-5xl mx-auto w-full my-auto">
+      {/* 4. Pre-Footer Call to Action */}
+      <section id="port-cta" className="min-h-screen flex flex-col justify-center px-6 sm:px-10 lg:px-16 bg-white text-black pt-16 pb-12">
+        <div className="max-w-6xl mx-auto w-full my-auto">
           {/* Eyebrow */}
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-2">
+          <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red block mb-2">
             READY TO MAKE AN IMPACT WITH YOUR BRAND?
           </span>
 
           {/* Headline */}
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-black font-display leading-[1.05]">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-black font-display leading-[1.02]">
             LET'S CREATE
             <br />
             SOMETHING
@@ -364,31 +373,31 @@ export default function PortfolioPage({
           </h2>
 
           {/* Subtitle */}
-          <p className="mt-3 text-xs sm:text-sm text-neutral-600 font-medium max-w-lg leading-relaxed">
+          <p className="mt-4 text-sm sm:text-base text-neutral-600 font-medium max-w-lg leading-relaxed">
             Tell us about your brand, your goals, and where you want to go. We'll handle the rest with world-class strategy, design, and technology.
           </p>
 
           {/* CTA Buttons */}
-          <div className="mt-5 sm:mt-6 flex flex-wrap items-center gap-3">
+          <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-4">
             <button
               onClick={onOpenContact}
-              className="px-6 py-2.5 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded transition-all duration-200 shadow-md shadow-red-600/30 cursor-pointer"
+              className="px-8 py-3 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded transition-all duration-200 shadow-md shadow-red-600/30 cursor-pointer"
             >
               Start a Project
             </button>
 
             <button
               onClick={onBackToHome}
-              className="px-6 py-2.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-bold uppercase tracking-wider rounded transition-colors cursor-pointer"
+              className="px-8 py-3 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-bold uppercase tracking-wider rounded transition-colors cursor-pointer"
             >
               Back to Main
             </button>
           </div>
         </div>
-
-        {/* Embedded White Footer */}
-        <Footer onOpenPolicy={onOpenPolicy} />
       </section>
+
+      {/* 5. Full-Width Pure White Footer */}
+      <Footer onOpenPolicy={onOpenPolicy} />
     </div>
   );
 }
