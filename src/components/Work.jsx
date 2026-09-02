@@ -23,7 +23,7 @@ export default function Work({ onSelectProject }) {
   ];
 
   return (
-    <section id="work" className="snap-section relative flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-black text-white pt-16 pb-12">
+    <section id="work" className="snap-section relative flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-black text-white pt-16 pb-8">
       <div className="max-w-5xl mx-auto w-full">
         {/* Section Header: Title & Description */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4 sm:pb-6 border-b border-neutral-900">

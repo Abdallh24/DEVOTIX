@@ -16,15 +16,11 @@ const CLIENTS = [
 
 export default function Clients() {
   return (
-    <section id="clients" className="snap-section relative flex flex-col justify-center bg-[#09090b] text-white overflow-hidden border-y border-neutral-900 px-4 sm:px-6 lg:px-8 pt-16 pb-12">
+    <section id="clients" className="snap-section relative flex flex-col justify-center bg-[#09090b] text-white overflow-hidden border-y border-neutral-900 px-4 sm:px-6 lg:px-8 pt-10 pb-8">
       <div className="max-w-5xl mx-auto w-full">
         {/* Section Header */}
-        <div className="flex flex-row items-center justify-between gap-3 mb-6 sm:mb-8">
+        <div className="text-center max-w-xl mx-auto mb-6 sm:mb-8 flex flex-col items-center justify-center">
           <TitleAccent type="clients" />
-          <div className="flex items-center space-x-1.5 text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-400 font-bold bg-neutral-900/80 px-2.5 py-1 rounded-full border border-neutral-800">
-            <img src="/favicon.png" alt="Devotix Icon" className="w-3 h-3 object-contain" />
-            <span>TRUSTED BY INDUSTRY TITANS</span>
-          </div>
         </div>
 
         {/* Dark Container for Client Marquee */}

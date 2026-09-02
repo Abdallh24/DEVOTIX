@@ -18,7 +18,7 @@ export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork, o
   return (
     <section
       id="home"
-      className="snap-section relative flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 bg-black overflow-hidden pt-14 pb-8"
+      className="snap-section min-h-screen relative flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 bg-black overflow-hidden pt-14 pb-8"
     >
       {/* Studio background image & transparent gradient overlays */}
       <div className="absolute inset-0 z-0 pointer-events-none">

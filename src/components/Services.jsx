@@ -61,7 +61,7 @@ export default function Services({ onSelectService }) {
   ];
 
   return (
-    <section id="services" className="snap-section relative flex flex-col justify-center bg-black text-white px-4 sm:px-6 lg:px-8 pt-16 pb-6">
+    <section id="services" className="snap-section relative flex flex-col justify-center bg-black text-white px-4 sm:px-6 lg:px-8 pt-10 pb-8">
       <div className="max-w-5xl mx-auto w-full">
         {/* Section Header */}
         <div className="text-center max-w-xl mx-auto mb-5 sm:mb-6">

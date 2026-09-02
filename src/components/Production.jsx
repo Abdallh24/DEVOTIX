@@ -64,7 +64,7 @@ export default function Production({ onPlayVideo }) {
   ];
 
   return (
-    <section id="production" className="snap-section relative flex flex-col justify-center bg-black text-white px-4 sm:px-6 lg:px-8 pt-16 pb-6">
+    <section id="production" className="snap-section relative flex flex-col justify-center bg-black text-white px-4 sm:px-6 lg:px-8 pt-10 pb-6">
       <div className="max-w-5xl mx-auto w-full">
         {/* Section Header */}
         <div className="text-center max-w-xl mx-auto mb-4 sm:mb-5">

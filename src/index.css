@@ -18,8 +18,7 @@
 
 /* Section styling for smooth natural scrolling */
 .snap-section {
-  min-height: 100vh;
-  min-height: 100dvh;
+  scroll-margin-top: 60px;
 }
 
 /* Highly visible, modern custom right slide bar / scrollbar */
