@@ -94,22 +94,19 @@ export default function Services({ onSelectService }) {
 
                 {/* Top Badge & Icon */}
                 <div className="relative z-10 mb-auto flex items-center justify-between w-full">
-                  <span className="text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-black/60 border border-white/10 backdrop-blur-md text-neutral-300 group-hover:border-brand-red/40 group-hover:text-white transition-colors">
+                  <span className="text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-black/60 border border-white/10 backdrop-blur-md text-neutral-300 group-hover:border-white/30 group-hover:text-white transition-colors">
                     {service.tag}
                   </span>
-                  <div className="w-5 h-5 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white/80 group-hover:text-brand-red group-hover:border-brand-red/50 transition-all">
+                  <div className="w-5 h-5 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white/80 group-hover:text-white group-hover:border-white/30 transition-all">
                     <ArrowUpRight className="w-2.5 h-2.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
                 </div>
 
                 {/* Bottom Content */}
                 <div className="relative z-10 mt-2">
-                  <div className="flex items-center space-x-1.5 mb-0.5">
-                    <Icon className="w-3.5 h-3.5 text-brand-red flex-shrink-0" />
-                    <h3 className="text-xs sm:text-sm font-black uppercase tracking-tight text-white group-hover:text-white transition-colors font-display line-clamp-1">
-                      {service.title}
-                    </h3>
-                  </div>
+                  <h3 className="text-xs sm:text-sm font-black uppercase tracking-tight text-white transition-colors font-display line-clamp-1 mb-0.5">
+                    {service.title}
+                  </h3>
                   <p className="text-[9px] sm:text-[10px] text-neutral-400 font-medium leading-tight max-w-xs group-hover:text-neutral-300 transition-colors line-clamp-2">
                     {service.description}
                   </p>

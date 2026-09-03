@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle } from 'lucide-react';
 import Footer from '../components/Footer';
+import { SOFTWARE_PROJECTS } from '../data/projectsData';
 
 export default function SoftwareCaseStudyPage({
+  project,
   onBack,
   onBackToHome,
   onBackToPortfolio,
@@ -12,14 +14,13 @@ export default function SoftwareCaseStudyPage({
 }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }, []);
+  }, [project]);
 
-  // Dynamic status state ('COMPLETED' | 'processing')
-  const [status, setStatus] = useState(initialStatus);
+  // Use passed project or default to first project (Car Hub)
+  const activeProject = project || SOFTWARE_PROJECTS[0];
 
-  const toggleStatus = () => {
-    setStatus((prev) => (prev === 'COMPLETED' ? 'processing' : 'COMPLETED'));
-  };
+  // Dynamic status state
+  const [status, setStatus] = useState(activeProject.status || initialStatus);
 
   const handleBack = () => {
     if (onBack) {
@@ -33,92 +34,129 @@ export default function SoftwareCaseStudyPage({
     }
   };
 
+  const handleRequestSimilarWork = () => {
+    if (onOpenContact) {
+      onOpenContact();
+    } else {
+      window.location.hash = '#contact';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-brand-red selection:text-white pt-16 flex flex-col justify-between">
-      <main className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-12 sm:space-y-16 flex-1">
-        {/* Top: Back Link */}
-        <div>
+      <main className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-10 sm:space-y-14 flex-1">
+        {/* Top Navigation Bar */}
+        <div className="flex items-center justify-between">
           <button
             onClick={handleBack}
             className="inline-flex items-center space-x-1.5 text-xs font-bold text-neutral-600 hover:text-brand-red transition-colors uppercase cursor-pointer group"
           >
             <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-            <span>Back</span>
+            <span>Back to Projects</span>
+          </button>
+
+          <button
+            onClick={handleRequestSimilarWork}
+            className="px-4 py-2 bg-brand-red hover:bg-brand-redHover text-white text-xs font-extrabold uppercase tracking-wider rounded shadow-md shadow-red-600/20 inline-flex items-center space-x-1.5 transition-all transform hover:scale-105"
+          >
+            <span>REQUEST SIMILAR WORK</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
         {/* ========================================================================= */}
-        {/* 1. PROJECT TITLE SECTION */}
+        {/* 1. PROJECT TITLE & LOGO HEADER SECTION */}
         {/* ========================================================================= */}
         <div className="border-l-4 border-brand-red pl-5 sm:pl-7 py-1 space-y-3">
-          {/* Top Row: STATUS Label + Interactive Badge (COMPLETED / processing) */}
-          <div className="flex items-center space-x-2.5">
+          {/* Top Row: STATUS Label + Badge */}
+          <div className="flex items-center space-x-3">
             <span className="text-[11px] font-black uppercase tracking-widest text-neutral-500">
               STATUS
             </span>
-            <button
-              onClick={toggleStatus}
-              title="Click to toggle status (COMPLETED / processing)"
-              className={`px-3 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider transition-all shadow-xs cursor-pointer ${
-                status === 'COMPLETED'
-                  ? 'bg-[#10B981] text-white hover:bg-emerald-600'
-                  : 'bg-amber-500 text-white hover:bg-amber-600'
-              }`}
-            >
-              {status === 'COMPLETED' ? 'COMPLETED' : 'PROCESSING'}
-            </button>
+            <span className="px-3 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#10B981] text-white shadow-xs">
+              {status}
+            </span>
+            <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest hidden sm:inline">
+              | {activeProject.category}
+            </span>
           </div>
 
-          {/* Headline: Lumina Core: Next-Gen Analytics with selective red accents */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-black font-display leading-[1.03]">
-            Lum<span className="text-brand-red">ina</span> C<span className="text-brand-red">o</span>re: Next-Gen Analytics
-          </h1>
+          {/* Headline */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-black font-display leading-[1.03]">
+              {activeProject.title}
+            </h1>
+            {activeProject.logo && (
+              <div className="p-3 bg-white rounded-xl border border-neutral-200 flex items-center justify-center max-w-[180px] self-start sm:self-auto shadow-sm">
+                <img
+                  src={activeProject.logo}
+                  alt={`${activeProject.title} Logo`}
+                  className="max-h-12 w-auto object-contain"
+                />
+              </div>
+            )}
+          </div>
 
           {/* Subtitle */}
           <p className="text-sm sm:text-base text-neutral-600 font-medium max-w-2xl leading-relaxed">
-            A smart analytics system designed to optimize logistics operations using predictive intelligence, real-time data streaming, and scalable enterprise architecture.
+            {activeProject.subtitle || activeProject.description}
           </p>
         </div>
 
         {/* ========================================================================= */}
-        {/* 2. IMAGE GALLERY SECTION (No video overlays) */}
+        {/* 2. IMAGE GALLERY SECTION (Cover Image & Folder Screenshots) */}
         {/* ========================================================================= */}
         <div className="space-y-4 sm:space-y-6">
-          {/* Layout Row 1: 2-Column Grid (Two wide landscape images side-by-side) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="rounded-xl overflow-hidden bg-neutral-100 border border-neutral-200/80 shadow-sm aspect-[16/10]">
-              <img
-                src="/assets/case-study/case-img-1.png"
-                alt="Lumina Analytics Dashboard Chart"
-                className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-105"
-                onError={(e) => {
-                  e.target.src = '/assets/project-view/video-chart.png';
-                }}
-              />
-            </div>
-
-            <div className="rounded-xl overflow-hidden bg-neutral-100 border border-neutral-200/80 shadow-sm aspect-[16/10]">
-              <img
-                src="/assets/case-study/case-img-2.png"
-                alt="Freight Logistics Shipping Yard"
-                className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-105"
-                onError={(e) => {
-                  e.target.src = '/assets/project-view/video-containers.png';
-                }}
-              />
-            </div>
+          {/* Main Cover Image Display */}
+          <div className="w-full rounded-xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-md aspect-[16/9]">
+            <img
+              src={activeProject.image}
+              alt={`${activeProject.title} Cover Image`}
+              className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-102"
+            />
           </div>
 
-          {/* Layout Row 2: Full-Width Landscape Image (Server Room / Architecture) */}
-          <div className="w-full rounded-xl overflow-hidden bg-neutral-100 border border-neutral-200/80 shadow-sm aspect-[16/8] sm:aspect-[21/9]">
-            <img
-              src="/assets/case-study/case-img-3.png"
-              alt="Cloud Server Infrastructure Infrastructure"
-              className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-105"
-              onError={(e) => {
-                e.target.src = '/assets/portfolio/aero-dynamics.png';
-              }}
-            />
+          {/* 2-Column Grid with Shot & Logo */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            {activeProject.shot && (
+              <div className="rounded-xl overflow-hidden bg-neutral-900 border border-neutral-200/80 shadow-sm aspect-[16/10]">
+                <img
+                  src={activeProject.shot}
+                  alt={`${activeProject.title} Screenshot`}
+                  className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+            )}
+
+            <div className="rounded-xl overflow-hidden bg-neutral-950 p-6 border border-neutral-800 flex flex-col justify-between text-white space-y-4">
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-brand-red block mb-1">
+                  DELIVERABLES & ARCHITECTURE
+                </span>
+                <h3 className="text-lg font-black uppercase tracking-tight font-display">
+                  {activeProject.title} SOFTWARE SYSTEM
+                </h3>
+                <p className="text-xs text-neutral-400 mt-2 leading-relaxed">
+                  {activeProject.description}
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-neutral-800 flex flex-wrap gap-2">
+                {activeProject.tags?.map((tag) => (
+                  <span key={tag} className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-neutral-900 text-neutral-300 border border-neutral-700">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <button
+                onClick={handleRequestSimilarWork}
+                className="w-full py-3 bg-brand-red hover:bg-brand-redHover text-white text-xs font-extrabold uppercase tracking-wider rounded shadow-md shadow-red-600/30 flex items-center justify-center space-x-1.5 transition-all"
+              >
+                <span>REQUEST SIMILAR WORK</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -135,7 +173,7 @@ export default function SoftwareCaseStudyPage({
             </div>
             <div className="sm:col-span-9">
               <p className="text-xs sm:text-sm text-neutral-600 font-medium leading-relaxed">
-                A custom high-throughput platform engineered to unify telemetry, supply chain logistics, and live financial metrics across 14 international fulfillment hubs. Built with distributed microservices, low-latency WebSockets, and a WebGL-accelerated visualization frontend.
+                {activeProject.details || activeProject.description}
               </p>
             </div>
           </div>
@@ -149,7 +187,7 @@ export default function SoftwareCaseStudyPage({
             </div>
             <div className="sm:col-span-9">
               <p className="text-xs sm:text-sm text-neutral-600 font-medium leading-relaxed">
-                Legacy monolithic ERP systems suffered from 45-minute synchronization delays, inaccurate predictive forecasting, and frequent operational bottlenecks during peak freight shipment cycles.
+                {activeProject.problem}
               </p>
             </div>
           </div>
@@ -163,28 +201,38 @@ export default function SoftwareCaseStudyPage({
             </div>
             <div className="sm:col-span-9">
               <p className="text-xs sm:text-sm text-neutral-600 font-medium leading-relaxed">
-                We designed and deployed an event-driven architecture powered by Kafka and Rust microservices, cutting data ingestion latency to under 12 milliseconds while training custom neural routing algorithms that reduced overall operational costs by 42%.
+                {activeProject.solution}
               </p>
             </div>
           </div>
 
-          {/* Row 4: LINK */}
-          <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-8 items-center">
+          {/* Row 4: ACTION & LINKS */}
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 sm:gap-8 items-center pt-4 border-t border-neutral-100">
             <div className="sm:col-span-3">
               <span className="text-[11px] font-black uppercase tracking-widest text-neutral-800 font-display block">
-                LINK
+                GET STARTED
               </span>
             </div>
-            <div className="sm:col-span-9">
-              <a
-                href="https://luminacore.analytics.devotix.io"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 px-6 py-3 bg-black hover:bg-neutral-800 text-white text-xs font-extrabold uppercase tracking-wider rounded transition-all duration-200 shadow-md group"
+            <div className="sm:col-span-9 flex flex-wrap items-center gap-3">
+              <button
+                onClick={handleRequestSimilarWork}
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-brand-red hover:bg-brand-redHover text-white text-xs font-extrabold uppercase tracking-wider rounded transition-all duration-200 shadow-md shadow-red-600/20 group cursor-pointer"
               >
-                <span>Visit Project</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </a>
+                <span>REQUEST SIMILAR WORK</span>
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </button>
+
+              {activeProject.link && (
+                <a
+                  href={activeProject.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 px-5 py-3 bg-black hover:bg-neutral-800 text-white text-xs font-extrabold uppercase tracking-wider rounded transition-all duration-200 shadow-md group"
+                >
+                  <span>Visit Project</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -195,3 +243,4 @@ export default function SoftwareCaseStudyPage({
     </div>
   );
 }
+

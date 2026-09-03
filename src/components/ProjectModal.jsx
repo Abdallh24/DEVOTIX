@@ -15,7 +15,7 @@ export default function ProjectModal({ project, onClose, onOpenContact, onNaviga
   const handleRequestSimilar = () => {
     onClose();
     if (onNavigateSoftwareEngineering) {
-      onNavigateSoftwareEngineering();
+      onNavigateSoftwareEngineering(project);
     } else {
       window.location.hash = '#software-engineering';
       window.scrollTo({ top: 0, behavior: 'smooth' });

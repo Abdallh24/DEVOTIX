@@ -198,6 +198,7 @@ export default function App() {
         />
       ) : currentPage === 'software-engineering' ? (
         <SoftwareCaseStudyPage
+          project={selectedProjectDetail}
           onBack={() => navigateToHome('work')}
           onBackToHome={() => navigateToHome('work')}
           onBackToPortfolio={() => navigateToHome('work')}
@@ -223,7 +224,16 @@ export default function App() {
             />
 
             {/* 3. Our Work Section (id="work") */}
-            <Work onSelectProject={(project) => setSelectedProject(project)} />
+            <Work
+              onSelectProject={(project) => {
+                setSelectedProjectDetail(project);
+                navigateToSoftwareEngineering();
+              }}
+              onRequestSimilarWork={(project) => {
+                setSelectedProjectDetail(project);
+                navigateToSoftwareEngineering();
+              }}
+            />
 
             {/* 4. Clients Section (id="clients") */}
             <Clients />
