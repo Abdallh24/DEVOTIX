@@ -61,7 +61,7 @@ export default function Work({ onSelectProject, onRequestSimilarWork }) {
                     onClick={(e) => handleProjectClick(SOFTWARE_PROJECTS[0], e)}
                     className="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-brand-red hover:bg-brand-redHover text-white text-[10px] sm:text-xs font-extrabold uppercase tracking-wider rounded-lg shadow-lg shadow-red-600/30 flex items-center space-x-1.5 transition-all transform group-hover:scale-105"
                   >
-                    <span>REQUEST SIMILAR WORK</span>
+                    <span>VIEW PROJECT</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -129,7 +129,7 @@ export default function Work({ onSelectProject, onRequestSimilarWork }) {
                         onClick={(e) => handleProjectClick(project, e)}
                         className="px-3 py-1 sm:px-3.5 sm:py-1.5 bg-brand-red hover:bg-brand-redHover text-white text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider rounded-md shadow-md shadow-red-600/30 flex items-center space-x-1 transition-all transform group-hover:scale-105"
                       >
-                        <span>REQUEST SIMILAR WORK</span>
+                        <span>VIEW PROJECT</span>
                         <ArrowUpRight className="w-3 h-3" />
                       </button>
                     </div>
