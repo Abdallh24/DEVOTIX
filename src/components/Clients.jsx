@@ -29,31 +29,34 @@ const LINE_2_ITEMS = [...ROW_2_LOGOS, ...ROW_2_LOGOS, ...ROW_2_LOGOS, ...ROW_2_L
 
 export default function Clients() {
   return (
-    <section id="clients" className="snap-section relative flex flex-col justify-center bg-[#09090b] text-white overflow-hidden border-y border-neutral-900 px-4 sm:px-6 lg:px-8 pt-10 pb-8">
-      <div className="max-w-5xl mx-auto w-full">
+    <section id="clients" className="snap-section relative flex flex-col justify-center section-alt-a overflow-hidden border-y border-neutral-200/80 dark:border-white/10 px-3.5 sm:px-6 lg:px-8 pt-12 pb-10 sm:pt-16 sm:pb-14 select-none">
+      <div className="max-w-6xl mx-auto w-full">
         {/* Section Header */}
-        <div className="text-center max-w-xl mx-auto mb-6 sm:mb-8 flex flex-col items-center justify-center">
+        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10 flex flex-col items-center justify-center">
           <TitleAccent type="clients" />
         </div>
 
-        {/* Dark Container for Client Marquee (Two Lines) */}
-        <div className="relative rounded-xl bg-neutral-950/80 border border-neutral-800/80 p-4 sm:p-6 overflow-hidden shadow-lg">
+        {/* Container for Client Marquee (Two Lines - Always LTR for perfect mathematical marquee symmetry) */}
+        <div
+          dir="ltr"
+          className="relative rounded-2xl bg-neutral-100/90 dark:bg-[#111116] border border-neutral-200/80 dark:border-white/10 p-6 sm:p-8 lg:p-10 overflow-hidden shadow-sm dark:shadow-2xl"
+        >
           {/* Gradient edge masks */}
-          <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-neutral-950 to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-neutral-950 to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 md:w-36 bg-gradient-to-r from-neutral-100 dark:from-[#111116] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 md:w-36 bg-gradient-to-l from-neutral-100 dark:from-[#111116] to-transparent z-10 pointer-events-none" />
 
           {/* Marquee Line 1 (Scrolls Left) */}
-          <div className="flex overflow-hidden py-3 select-none marquee-container">
-            <div className="animate-marquee flex items-center space-x-8 sm:space-x-12 hover:[animation-play-state:paused]">
+          <div className="flex overflow-hidden py-3 select-none marquee-container w-full">
+            <div className="animate-marquee flex items-center gap-10 sm:gap-16 md:gap-20 flex-shrink-0 will-change-transform">
               {LINE_1_ITEMS.map((client, idx) => (
                 <div
                   key={`line1-${client.id}-${idx}`}
-                  className="flex items-center justify-center min-w-[110px] sm:min-w-[150px] h-16 sm:h-20 cursor-pointer group transition-all duration-300"
+                  className="flex items-center justify-center min-w-[140px] sm:min-w-[180px] md:min-w-[210px] h-20 sm:h-24 md:h-28 flex-shrink-0 cursor-pointer group transition-all duration-300"
                 >
                   <img
                     src={client.logo}
                     alt={client.name}
-                    className="max-h-12 sm:max-h-16 max-w-[110px] sm:max-w-[140px] object-contain opacity-85 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 filter drop-shadow-sm"
+                    className="max-h-16 sm:max-h-20 md:max-h-24 max-w-[130px] sm:max-w-[170px] md:max-w-[190px] object-contain rounded-lg opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 filter drop-shadow-md"
                     onError={(e) => {
                       e.target.style.display = 'none';
                       if (e.target.nextSibling) {
@@ -61,7 +64,7 @@ export default function Clients() {
                       }
                     }}
                   />
-                  <span className="hidden text-xs sm:text-sm font-bold tracking-wider text-neutral-400 uppercase">
+                  <span className="hidden text-xs sm:text-sm font-bold tracking-wider text-neutral-500 dark:text-neutral-400 uppercase">
                     {client.name}
                   </span>
                 </div>
@@ -70,17 +73,17 @@ export default function Clients() {
           </div>
 
           {/* Marquee Line 2 (Scrolls Right / Reverse) */}
-          <div className="flex overflow-hidden py-3 mt-4 select-none border-t border-neutral-900/80 marquee-container">
-            <div className="animate-marquee-reverse flex items-center space-x-8 sm:space-x-12 hover:[animation-play-state:paused]">
+          <div className="flex overflow-hidden py-3 mt-6 sm:mt-8 select-none border-t border-neutral-200/80 dark:border-white/10 marquee-container w-full">
+            <div className="animate-marquee-reverse flex items-center gap-10 sm:gap-16 md:gap-20 flex-shrink-0 will-change-transform">
               {LINE_2_ITEMS.map((client, idx) => (
                 <div
                   key={`line2-${client.id}-${idx}`}
-                  className="flex items-center justify-center min-w-[110px] sm:min-w-[150px] h-16 sm:h-20 cursor-pointer group transition-all duration-300"
+                  className="flex items-center justify-center min-w-[140px] sm:min-w-[180px] md:min-w-[210px] h-20 sm:h-24 md:h-28 flex-shrink-0 cursor-pointer group transition-all duration-300"
                 >
                   <img
                     src={client.logo}
                     alt={client.name}
-                    className="max-h-12 sm:max-h-16 max-w-[110px] sm:max-w-[140px] object-contain opacity-85 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 filter drop-shadow-sm"
+                    className="max-h-16 sm:max-h-20 md:max-h-24 max-w-[130px] sm:max-w-[170px] md:max-w-[190px] object-contain rounded-lg opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 filter drop-shadow-md"
                     onError={(e) => {
                       e.target.style.display = 'none';
                       if (e.target.nextSibling) {
@@ -88,7 +91,7 @@ export default function Clients() {
                       }
                     }}
                   />
-                  <span className="hidden text-xs sm:text-sm font-bold tracking-wider text-neutral-400 uppercase">
+                  <span className="hidden text-xs sm:text-sm font-bold tracking-wider text-neutral-500 dark:text-neutral-400 uppercase">
                     {client.name}
                   </span>
                 </div>
@@ -100,4 +103,3 @@ export default function Clients() {
     </section>
   );
 }
-

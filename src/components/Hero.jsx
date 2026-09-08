@@ -1,16 +1,19 @@
 import React from 'react';
 import { ArrowRight, ArrowUpRight, ChevronDown, Play } from 'lucide-react';
+import { useThemeLanguage } from '../context/ThemeLanguageContext';
 
 export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork, onPlayVideo }) {
+  const { isRtl, isDark, t } = useThemeLanguage();
+
   const handlePlayShowreel = () => {
     if (onPlayVideo) {
       onPlayVideo({
         id: 'devotix-hero-showreel',
-        title: 'DEVOTIX SHOWREEL 2026',
+        title: t('hero.reelModalTitle', 'DEVOTIX SHOWREEL 2026'),
         category: 'COMMERCIAL PRODUCTION • 3D CGI',
         duration: '02:45',
         image: '/assets/production/featured-car.png',
-        description: 'Experience our 2026 director showreel featuring cinematic commercial productions and 3D VFX simulations.'
+        description: t('hero.tagline', 'Experience our 2026 director showreel featuring cinematic commercial productions and 3D VFX simulations.')
       });
     }
   };
@@ -18,7 +21,7 @@ export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork, o
   return (
     <section
       id="home"
-      className="snap-section min-h-screen relative flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 bg-black overflow-hidden pt-14 pb-8"
+      className="snap-section min-h-screen relative flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 section-alt-a overflow-hidden pt-14 pb-8 select-none"
     >
       {/* Studio background image & transparent gradient overlays */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -41,37 +44,49 @@ export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork, o
       {/* Hero Content */}
       <div className="relative z-10 max-w-3xl mx-auto text-center flex flex-col items-center my-auto">
         {/* Scaled-down Sleek Headline */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight uppercase leading-[1.05] text-white font-display">
-          MAKE YOUR BRAND
-          <br />
-          <span className="bg-[linear-gradient(90deg,#FFFFFF_5%,#E4E4E7_30%,#71717A_65%,#3F3F46_100%)] bg-clip-text text-transparent inline-block drop-shadow-sm">
-            IMPOSSIBLE TO
+        {isRtl ? (
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] text-white font-display">
+            خلّي براندك
             <br />
-            IGNORE.
-          </span>
-        </h1>
+            <span className="bg-[linear-gradient(90deg,#FFFFFF_5%,#E4E4E7_30%,#71717A_65%,#3F3F46_100%)] bg-clip-text text-transparent inline-block drop-shadow-sm">
+              مستحيل
+              <br />
+              يتجاهلوه.
+            </span>
+          </h1>
+        ) : (
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight uppercase leading-[1.05] text-white font-display">
+            MAKE YOUR BRAND
+            <br />
+            <span className="bg-[linear-gradient(90deg,#FFFFFF_5%,#E4E4E7_30%,#71717A_65%,#3F3F46_100%)] bg-clip-text text-transparent inline-block drop-shadow-sm">
+              IMPOSSIBLE TO
+              <br />
+              IGNORE.
+            </span>
+          </h1>
+        )}
 
         {/* Subtitle */}
         <p className="mt-3 max-w-lg text-[11px] sm:text-xs text-neutral-400 font-medium tracking-wide uppercase leading-relaxed text-center px-4">
-          WE ARE A FULL-SERVICE CREATIVE MEDIA AGENCY DRIVEN BY DATA, CRAFTED WITH PASSION, AND COMMITTED TO MAKING BRANDS UNFORGETTABLE.
+          {t('hero.tagline', 'WE ARE A FULL-SERVICE CREATIVE MEDIA AGENCY DRIVEN BY DATA, CRAFTED WITH PASSION, AND COMMITTED TO MAKING BRANDS UNFORGETTABLE.')}
         </p>
 
         {/* Two Call-to-Action Buttons */}
         <div className="mt-5 sm:mt-6 flex flex-row items-center gap-3 w-auto justify-center">
           <button
             onClick={onScrollToWork}
-            className="px-5 py-2 bg-brand-red hover:bg-brand-redHover text-white text-[11px] font-bold uppercase tracking-wider rounded-md transition-all duration-300 transform hover:scale-105 shadow-md shadow-red-600/30 flex items-center justify-center space-x-1.5 cursor-pointer"
+            className="px-5 py-2 bg-brand-red hover:bg-brand-redHover text-white text-[11px] font-bold uppercase tracking-wider rounded-md transition-all duration-300 transform hover:scale-105 shadow-md shadow-red-600/30 flex items-center justify-center space-x-1.5 rtl:space-x-reverse cursor-pointer"
           >
-            <span>EXPLORE OUR PROJECTS</span>
-            <ArrowRight className="w-3 h-3" />
+            <span>{t('hero.exploreWork', 'EXPLORE OUR PROJECTS')}</span>
+            <ArrowRight className="w-3 h-3 rtl:rotate-180" />
           </button>
 
           <button
             onClick={onOpenContact}
-            className="px-5 py-2 bg-transparent hover:bg-white/10 text-white border border-white/40 hover:border-white text-[11px] font-bold uppercase tracking-wider rounded-md transition-all duration-300 backdrop-blur-sm flex items-center justify-center space-x-1.5 group cursor-pointer"
+            className="px-5 py-2 bg-transparent hover:bg-white/10 text-white border border-white/40 hover:border-white text-[11px] font-bold uppercase tracking-wider rounded-md transition-all duration-300 backdrop-blur-sm flex items-center justify-center space-x-1.5 rtl:space-x-reverse group cursor-pointer"
           >
-            <span>LET'S TALK</span>
-            <ArrowUpRight className="w-3 h-3 text-white group-hover:scale-110 transition-transform" />
+            <span>{t('nav.letsTalk', "LET'S TALK")}</span>
+            <ArrowUpRight className="w-3 h-3 text-white group-hover:scale-110 transition-transform rtl:rotate-[-90deg]" />
           </button>
         </div>
 
@@ -90,19 +105,19 @@ export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork, o
           {/* Central Pulsing Play Button */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-brand-red text-white flex items-center justify-center shadow-lg shadow-red-600/50 group-hover:scale-110 transition-transform">
-              <Play className="w-4 h-4 fill-white translate-x-0.5" />
+              <Play className="w-4 h-4 fill-white translate-x-0.5 rtl:-translate-x-0.5" />
             </div>
           </div>
 
           {/* Top/Bottom Badges */}
-          <div className="absolute top-2 left-2 pointer-events-none">
+          <div className="absolute top-2 left-2 rtl:left-auto rtl:right-2 pointer-events-none">
             <span className="px-2 py-0.5 bg-black/70 backdrop-blur-md rounded-full text-[8px] font-extrabold uppercase tracking-widest text-white border border-white/10">
               4K REEL
             </span>
           </div>
           <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
             <span className="text-[9px] font-extrabold uppercase tracking-wider text-white">
-              WATCH SHOWREEL
+              {t('hero.watchReel', 'WATCH SHOWREEL')}
             </span>
             <span className="text-[8.5px] font-mono text-neutral-300">
               02:45
@@ -118,7 +133,7 @@ export default function Hero({ onOpenPortfolio, onOpenContact, onScrollToWork, o
         aria-label="Scroll to work"
       >
         <span className="text-[8px] uppercase tracking-widest text-neutral-400 font-bold mb-0.5 group-hover:text-brand-red transition-colors">
-          SCROLL
+          {isRtl ? 'تمرير' : 'SCROLL'}
         </span>
         <ChevronDown className="w-3.5 h-3.5 text-brand-red animate-bounce" />
       </button>

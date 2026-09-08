@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { ThemeLanguageProvider, useThemeLanguage } from './context/ThemeLanguageContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Work from './components/Work';
-import Clients from './components/Clients';
-import Graphic from './components/Graphic';
 import Services from './components/Services';
+import Work from './components/Work';
 import Production from './components/Production';
 import Photography from './components/Photography';
+import Graphic from './components/Graphic';
+import Clients from './components/Clients';
 import Footer from './components/Footer';
 import RightSlideBar from './components/RightSlideBar';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
+import FloatingContactButton from './components/FloatingContactButton';
 
 // Pages
 import ProjectViewPage from './pages/ProjectViewPage';
@@ -18,6 +21,9 @@ import CareerPage from './pages/CareerPage';
 import JobApplyPage from './pages/JobApplyPage';
 import SendCvPage from './pages/SendCvPage';
 import ContactPage from './pages/ContactPage';
+import PhotographyGalleryPage from './pages/PhotographyGalleryPage';
+import GraphicsGalleryPage from './pages/GraphicsGalleryPage';
+import GraphicSingleViewPage from './pages/GraphicSingleViewPage';
 
 // Modals
 import VideoModal from './components/VideoModal';
@@ -28,11 +34,15 @@ import PolicyModal from './components/PolicyModal';
 import CareerModal from './components/CareerModal';
 import AboutModal from './components/AboutModal';
 
-export default function App() {
-  // Page routing state ('home' | 'project-view' | 'software-engineering' | 'about' | 'career' | 'job-apply' | 'send-cv' | 'contact')
+function AppContent() {
+  const { isDark } = useThemeLanguage();
+
+  // Page routing state ('home' | 'project-view' | 'software-engineering' | 'about' | 'career' | 'job-apply' | 'send-cv' | 'contact' | 'photography-gallery' | 'graphics-gallery' | 'graphic-view')
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedProjectDetail, setSelectedProjectDetail] = useState(null);
   const [selectedJobRole, setSelectedJobRole] = useState(null);
+  const [selectedPhotoGallery, setSelectedPhotoGallery] = useState(null);
+  const [selectedGraphic, setSelectedGraphic] = useState(null);
 
   // Modal states
   const [activeVideo, setActiveVideo] = useState(null);
@@ -61,6 +71,12 @@ export default function App() {
         setCurrentPage('send-cv');
       } else if (hash === '#contact' || hash === '#talk') {
         setCurrentPage('contact');
+      } else if (hash === '#photography-gallery' || hash === '#gallery') {
+        setCurrentPage('photography-gallery');
+      } else if (hash === '#graphics-gallery') {
+        setCurrentPage('graphics-gallery');
+      } else if (hash === '#graphic-view') {
+        setCurrentPage('graphic-view');
       } else {
         setCurrentPage('home');
       }
@@ -71,7 +87,10 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const navigateToSoftwareEngineering = () => {
+  const navigateToSoftwareEngineering = (project = null) => {
+    if (project) {
+      setSelectedProjectDetail(project);
+    }
     window.location.hash = '#software-engineering';
     setCurrentPage('software-engineering');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -90,6 +109,13 @@ export default function App() {
   };
 
   const navigateToContact = () => {
+    setActiveVideo(null);
+    setLightboxData(null);
+    setSelectedProject(null);
+    setIsAboutOpen(false);
+    setIsCareerOpen(false);
+    setIsContactOpen(false);
+    setPolicyType(null);
     window.location.hash = '#contact';
     setCurrentPage('contact');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -112,6 +138,26 @@ export default function App() {
     setSelectedProjectDetail(project);
     window.location.hash = '#project-view';
     setCurrentPage('project-view');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const navigateToPhotoGallery = (gallery) => {
+    setSelectedPhotoGallery(gallery);
+    window.location.hash = '#photography-gallery';
+    setCurrentPage('photography-gallery');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const navigateToGraphicsGallery = () => {
+    window.location.hash = '#graphics-gallery';
+    setCurrentPage('graphics-gallery');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const navigateToGraphicSingleView = (graphic) => {
+    setSelectedGraphic(graphic);
+    window.location.hash = '#graphic-view';
+    setCurrentPage('graphic-view');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
@@ -148,7 +194,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-brand-red selection:text-white font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#08080a] text-neutral-900 dark:text-white selection:bg-brand-red selection:text-white font-sans overflow-x-hidden transition-colors duration-300">
       {/* 1. FIXED Header (Across ALL pages) */}
       <Header
         currentPage={currentPage}
@@ -213,45 +259,66 @@ export default function App() {
           onOpenLightbox={(photos, index) => setLightboxData({ photos, index })}
           onOpenPolicy={(type) => setPolicyType(type)}
         />
+      ) : currentPage === 'photography-gallery' ? (
+        <PhotographyGalleryPage
+          gallery={selectedPhotoGallery}
+          onBackToHome={() => navigateToHome('photography')}
+          onOpenLightbox={(photos, index) => setLightboxData({ photos, index })}
+          onOpenPolicy={(type) => setPolicyType(type)}
+        />
+      ) : currentPage === 'graphics-gallery' ? (
+        <GraphicsGalleryPage
+          onBackToHome={() => navigateToHome('graphic')}
+          onSelectGraphic={navigateToGraphicSingleView}
+          onOpenPolicy={(type) => setPolicyType(type)}
+        />
+      ) : currentPage === 'graphic-view' ? (
+        <GraphicSingleViewPage
+          graphic={selectedGraphic}
+          onBackToGallery={navigateToGraphicsGallery}
+          onSelectGraphic={navigateToGraphicSingleView}
+          onOpenPolicy={(type) => setPolicyType(type)}
+        />
       ) : (
         <>
           <main>
-            {/* 2. Hero Section (id="home") */}
+            {/* 1. Hero Section (id="home") */}
             <Hero
               onOpenContact={navigateToContact}
               onScrollToWork={scrollToWork}
               onPlayVideo={(video) => setActiveVideo(video)}
             />
 
+            {/* 2. Services Section (id="services") */}
+            <Services onSelectService={navigateToContact} />
+
             {/* 3. Our Work Section (id="work") */}
             <Work
               onSelectProject={(project) => {
-                setSelectedProjectDetail(project);
-                navigateToSoftwareEngineering();
+                navigateToSoftwareEngineering(project);
               }}
               onRequestSimilarWork={(project) => {
-                setSelectedProjectDetail(project);
-                navigateToSoftwareEngineering();
+                navigateToSoftwareEngineering(project);
               }}
             />
 
-            {/* 4. Clients Section (id="clients") */}
-            <Clients />
-
-            {/* 4.5. Graphic Section (id="graphic") */}
-            <Graphic onOpenLightbox={(photos, index) => setLightboxData({ photos, index })} />
-
-            {/* 5. Production Section (id="production") */}
+            {/* 4. Production Section (id="production") */}
             <Production onPlayVideo={(video) => setActiveVideo(video)} />
 
-            {/* 6. Photography Section (id="photography") */}
-            <Photography onOpenLightbox={(photos, index) => setLightboxData({ photos, index })} />
+            {/* 5. Photography Section (id="photography") */}
+            <Photography onSelectGallery={navigateToPhotoGallery} />
 
-            {/* 7. Services Section (id="services") - Right Before Footer */}
-            <Services onSelectService={navigateToContact} />
+            {/* 6. Graphic Section (id="graphic") */}
+            <Graphic
+              onNavigateGallery={navigateToGraphicsGallery}
+              onSelectGraphic={navigateToGraphicSingleView}
+            />
+
+            {/* 7. Clients Section (id="clients") */}
+            <Clients />
           </main>
 
-          {/* Standalone Footer (White Background) */}
+          {/* 8. Standalone Footer (White Background) */}
           <Footer onOpenPolicy={(type) => setPolicyType(type)} />
         </>
       )}
@@ -297,6 +364,25 @@ export default function App() {
         onClose={() => setIsAboutOpen(false)}
         onOpenContact={navigateToContact}
       />
+
+      {/* 3. Floating WhatsApp with Branch Selector (Egypt / Saudi Arabia) */}
+      <FloatingWhatsApp />
+
+      {/* 4. Persistent Global Floating Contact CTA Button */}
+      {currentPage !== 'contact' && (
+        <FloatingContactButton
+          onNavigateContact={navigateToContact}
+          currentPage={currentPage}
+        />
+      )}
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeLanguageProvider>
+      <AppContent />
+    </ThemeLanguageProvider>
   );
 }

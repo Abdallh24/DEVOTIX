@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -13,12 +14,18 @@ export default {
           dark: '#050505',
           darkCard: '#0E0E10',
           darkBorder: '#222226',
-          muted: '#8A8A93'
+          muted: '#8A8A93',
+          lightBg: '#F8F9FA',
+          lightCard: '#FFFFFF',
+          lightBorder: '#E5E7EB',
+          lightText: '#111827',
+          lightMuted: '#6B7280'
         }
       },
       fontFamily: {
-        sans: ['Montserrat', 'Poppins', 'sans-serif'],
-        display: ['Montserrat', 'Syne', 'sans-serif']
+        sans: ['Montserrat', 'Cairo', 'Tajawal', 'Poppins', 'sans-serif'],
+        display: ['Montserrat', 'Cairo', 'Syne', 'sans-serif'],
+        arabic: ['Cairo', 'Tajawal', 'sans-serif'],
       },
       animation: {
         'marquee': 'marquee 28s linear infinite',

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { X, ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useThemeLanguage } from '../context/ThemeLanguageContext';
 
 export default function LightboxModal({ photos, initialIndex = 0, onClose }) {
+  const { isRtl } = useThemeLanguage();
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   useEffect(() => {
@@ -41,7 +43,7 @@ export default function LightboxModal({ photos, initialIndex = 0, onClose }) {
 
       {/* Top Action Bar */}
       <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between pointer-events-auto">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <span className="text-xs font-mono font-bold uppercase tracking-widest px-3 py-1 rounded bg-neutral-900 border border-neutral-700 text-neutral-300">
             {currentIndex + 1} / {photos.length}
           </span>
@@ -52,7 +54,7 @@ export default function LightboxModal({ photos, initialIndex = 0, onClose }) {
 
         <button
           onClick={onClose}
-          className="w-10 h-10 rounded-full bg-neutral-900/80 hover:bg-brand-red text-white flex items-center justify-center transition-colors border border-neutral-700"
+          className="w-10 h-10 rounded-full bg-neutral-900/80 hover:bg-brand-red text-white flex items-center justify-center transition-colors border border-neutral-700 cursor-pointer"
           aria-label="Close Lightbox"
         >
           <X className="w-5 h-5" />
@@ -65,10 +67,10 @@ export default function LightboxModal({ photos, initialIndex = 0, onClose }) {
           e.stopPropagation();
           handlePrev();
         }}
-        className="absolute left-4 z-20 w-12 h-12 rounded-full bg-neutral-900/80 hover:bg-brand-red text-white flex items-center justify-center transition-all duration-300 border border-neutral-700 hover:scale-110"
+        className="absolute left-4 z-20 w-12 h-12 rounded-full bg-neutral-900/80 hover:bg-brand-red text-white flex items-center justify-center transition-all duration-300 border border-neutral-700 hover:scale-110 cursor-pointer"
         aria-label="Previous image"
       >
-        <ChevronLeft className="w-6 h-6" />
+        <ChevronLeft className="w-6 h-6 rtl:rotate-180" />
       </button>
 
       {/* Right Next Button */}
@@ -77,10 +79,10 @@ export default function LightboxModal({ photos, initialIndex = 0, onClose }) {
           e.stopPropagation();
           handleNext();
         }}
-        className="absolute right-4 z-20 w-12 h-12 rounded-full bg-neutral-900/80 hover:bg-brand-red text-white flex items-center justify-center transition-all duration-300 border border-neutral-700 hover:scale-110"
+        className="absolute right-4 z-20 w-12 h-12 rounded-full bg-neutral-900/80 hover:bg-brand-red text-white flex items-center justify-center transition-all duration-300 border border-neutral-700 hover:scale-110 cursor-pointer"
         aria-label="Next image"
       >
-        <ChevronRight className="w-6 h-6" />
+        <ChevronRight className="w-6 h-6 rtl:rotate-180" />
       </button>
 
       {/* Main Image Display */}
@@ -97,7 +99,7 @@ export default function LightboxModal({ photos, initialIndex = 0, onClose }) {
             {currentPhoto.category}
           </span>
           <h3 className="text-base sm:text-lg font-black uppercase tracking-wide text-white mt-0.5">
-            {currentPhoto.title} — <span className="text-neutral-400 font-medium text-sm">{currentPhoto.location}</span>
+            {currentPhoto.title} {currentPhoto.location ? <>— <span className="text-neutral-400 font-medium text-sm">{currentPhoto.location}</span></> : null}
           </h3>
         </div>
       </div>

@@ -1,220 +1,149 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import TitleAccent from './TitleAccent';
-import { ArrowLeft, ArrowRight, Maximize2 } from 'lucide-react';
+import { ArrowUpRight, Layers } from 'lucide-react';
+import { GRAPHICS_DATA } from '../data/graphicsData';
+import { useThemeLanguage } from '../context/ThemeLanguageContext';
 
-const GRAPHIC_ITEMS = [
-  {
-    id: 1,
-    title: 'CAR HUB DIGITAL COVER',
-    category: 'AUTOMOTIVE BRANDING & UI/UX',
-    image: '/assets/graphic/og/carhub-cover.png',
-  },
-  {
-    id: 2,
-    title: 'EGY COLOR COVER',
-    category: 'COLOR & COATINGS BRANDING',
-    image: '/assets/graphic/og/egycolor-cover.jpeg',
-  },
-  {
-    id: 3,
-    title: 'MELTIX BURGER COVER',
-    category: 'RESTAURANT BRAND IDENTITY',
-    image: '/assets/graphic/og/meltix-cover.png',
-  },
-  {
-    id: 4,
-    title: 'CAR HUB SHOWCASE',
-    category: 'DIGITAL ART DIRECTION',
-    image: '/assets/graphic/og/carhub-shot.jpg',
-  },
-  {
-    id: 5,
-    title: 'EGY COLOR BRANDING',
-    category: 'COLOR & BRAND SYSTEM',
-    image: '/assets/graphic/og/egycolor-logo.png',
-  },
-  {
-    id: 6,
-    title: 'EGY COLOR INTERFACE',
-    category: 'DIGITAL CATALOG GRAPHIC',
-    image: '/assets/graphic/og/egycolor-shot.png',
-  },
-  {
-    id: 7,
-    title: 'MELTIX BURGER LOGO',
-    category: 'VISUAL LOGO DESIGN',
-    image: '/assets/graphic/og/meltix-logo.jpg',
-  },
-  {
-    id: 8,
-    title: 'MELTIX BURGER INTERFACE',
-    category: 'GRAPHIC INTERFACE DESIGN',
-    image: '/assets/graphic/og/meltix-shot.png',
-  },
-];
+export default function Graphic({ onNavigateGallery, onSelectGraphic }) {
+  const { isRtl, isDark, t } = useThemeLanguage();
 
-export default function Graphic({ onOpenLightbox }) {
-  // 4 items visible in one row on desktop
-  const itemsVisible = 4;
-  const maxIndex = Math.max(0, GRAPHIC_ITEMS.length - itemsVisible); // 8 - 4 = 4
-  const totalSlides = maxIndex + 1; // 5 positions
+  const cover1 = GRAPHICS_DATA[0]; // CAR HUB DIGITAL COVER
+  const cover2 = GRAPHICS_DATA[1]; // EGY COLOR INDUSTRIAL COVER
+  const cover3 = GRAPHICS_DATA[2]; // MELTIX BURGER BRAND IDENTITY
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const touchStartX = useRef(null);
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-  };
-
-  // Auto-move in the same row; stops while hovered
-  useEffect(() => {
-    if (isHovered) return;
-
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-    }, 3200);
-
-    return () => clearInterval(timer);
-  }, [isHovered, maxIndex]);
-
-  // Touch handlers for mobile swipe
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e) => {
-    if (touchStartX.current === null) return;
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) handleNext();
-      else handlePrev();
+  const handleCoverClick = (graphic) => {
+    if (onNavigateGallery) {
+      onNavigateGallery();
+    } else if (onSelectGraphic) {
+      onSelectGraphic(graphic);
     }
-    touchStartX.current = null;
   };
 
   return (
     <section
       id="graphic"
-      className="snap-section relative flex flex-col justify-center bg-black text-white px-4 sm:px-6 lg:px-8 pt-10 pb-8 select-none overflow-hidden"
+      className="snap-section relative flex flex-col justify-center section-alt-b px-3.5 sm:px-6 lg:px-8 pt-12 pb-10 sm:pt-16 sm:pb-14 select-none"
     >
       <div className="max-w-5xl mx-auto w-full">
-        {/* Section Header with Centered Title (like Videos) & Navigation Arrows */}
-        <div className="relative flex items-center justify-center mb-6 sm:mb-8 pb-3 border-b border-neutral-900/80">
-          <div className="text-center">
-            <TitleAccent type="graphic" />
-          </div>
-
-          {/* Navigation Arrows at Right */}
-          <div className="absolute right-0 flex items-center space-x-2.5">
-            <button
-              onClick={handlePrev}
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-neutral-800 hover:border-brand-red text-neutral-400 hover:text-white bg-neutral-950/80 hover:bg-neutral-900 flex items-center justify-center transition-all duration-200 cursor-pointer group"
-              aria-label="Previous Graphic"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:-translate-x-0.5 transition-transform" />
-            </button>
-            <button
-              onClick={handleNext}
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-neutral-800 hover:border-brand-red text-neutral-400 hover:text-white bg-neutral-950/80 hover:bg-neutral-900 flex items-center justify-center transition-all duration-200 cursor-pointer group"
-              aria-label="Next Graphic"
-            >
-              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-          </div>
+        {/* Section Header */}
+        <div className="text-center max-w-xl mx-auto mb-6 sm:mb-8 pb-3 border-b border-neutral-200/80 dark:border-white/10">
+          <TitleAccent type="graphic" />
+          <p className="mt-2 text-[10px] sm:text-[11.5px] text-neutral-600 dark:text-neutral-400 font-semibold uppercase tracking-widest leading-relaxed">
+            {t('graphic.subtitle', 'Brand identity, digital art direction, packaging, and UI/UX design.')}
+          </p>
         </div>
 
-        {/* 4 Pictures in One Row: Height 170px, Width Flexible, 20px Gap Around, Hover Stop */}
-        <div
-          className="relative overflow-hidden w-full py-1"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
+        {/* 2-Column Home Layout: Large Card + 2-Column Grid on Mobile | Large Left + 2 Stacked on Desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-2.5 sm:gap-4 lg:gap-5 items-stretch">
+          {/* Cover 1: LARGE LEFT CARD on Desktop / Full-width Top Banner on Mobile */}
           <div
-            className="flex items-center justify-around gap-[20px] transition-transform duration-600 ease-out"
-            style={{
-              transform: `translateX(calc(-1 * ${currentIndex} * (100% + 20px) / 4))`,
-            }}
+            onClick={() => handleCoverClick(cover1)}
+            className="col-span-2 md:col-span-6 group relative rounded-lg sm:rounded-xl overflow-hidden bg-neutral-900 dark:bg-[#111116] border border-neutral-200/90 dark:border-white/10 cursor-pointer transition-all duration-300 hover:border-brand-red/60 hover:shadow-xl hover:-translate-y-0.5 flex flex-col h-[200px] sm:h-[260px] md:h-[450px]"
           >
-            {GRAPHIC_ITEMS.map((item, index) => (
-              <div
-                key={item.id}
-                style={{
-                  width: 'calc((100% - 60px) / 4)',
-                  minWidth: 'calc((100% - 60px) / 4)',
-                }}
-                className="flex-shrink-0 flex-1"
-              >
-                <div
-                  onClick={() => onOpenLightbox && onOpenLightbox(GRAPHIC_ITEMS, index)}
-                  className="group relative h-[250px] sm:h-[270px] w-full rounded-xl overflow-hidden bg-neutral-950 border border-neutral-800/90 hover:border-neutral-700 transition-all duration-300 cursor-pointer shadow-md flex flex-col justify-end"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="absolute inset-0 w-full h-[250px] sm:h-[270px] object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-                  />
+            <img
+              src={cover1.thumb}
+              alt={cover1.title}
+              className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-90 group-hover:opacity-95 transition-opacity" />
 
-                  {/* Dark subtle gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+            {/* Gallery Badge Top Right */}
+            <div className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 rtl:right-auto rtl:left-2.5 rtl:sm:left-3 z-10">
+              <div className="flex items-center space-x-1 rtl:space-x-reverse px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-[7px] sm:text-[8.5px] font-bold uppercase tracking-wider group-hover:bg-brand-red group-hover:border-brand-red transition-all shadow">
+                <Layers className="w-2 sm:w-2.5 h-2 sm:h-2.5 text-white" />
+                <span>{t('graphic.viewGallery', 'VIEW GALLERY')}</span>
+                <ArrowUpRight className="w-2 sm:w-2.5 h-2 sm:h-2.5 text-white rtl:rotate-[-90deg]" />
+              </div>
+            </div>
 
-                  {/* Zoom Icon Top Right */}
-                  <div className="absolute top-2.5 right-2.5 opacity-0 group-hover:opacity-100 transition-all duration-200">
-                    <div className="w-6 h-6 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-brand-red hover:border-brand-red transition-colors shadow">
-                      <Maximize2 className="w-2.5 h-2.5" />
-                    </div>
-                  </div>
+            {/* Photo Metadata Bottom */}
+            <div className="absolute bottom-2.5 sm:bottom-3 left-3 sm:left-3.5 right-3 sm:right-3.5 z-10">
+              <span className="text-[7px] sm:text-[8px] font-bold uppercase tracking-widest text-brand-red block mb-0.5">
+                {cover1.category}
+              </span>
+              <h4 className="text-[11px] sm:text-[13px] font-black uppercase tracking-tight text-white font-display line-clamp-1">
+                {cover1.title}
+              </h4>
+              <p className="text-[8px] sm:text-[9px] text-neutral-300 font-medium mt-0.5 flex items-center gap-1 group-hover:text-white transition-colors">
+                <span>{cover1.client}</span>
+                <span className="hidden xs:inline">• {t('graphic.clickToOpenGallery', 'Click to Open Graphics Gallery')}</span>
+              </p>
+            </div>
+          </div>
 
-                  {/* Card Metadata at Bottom */}
-                  <div className="relative z-10 p-3">
-                    <span className="text-[7.5px] sm:text-[8px] font-bold uppercase tracking-widest text-brand-red block mb-0.5">
-                      {item.category}
-                    </span>
-                    <h4 className="text-[10px] sm:text-[11px] font-black uppercase tracking-tight text-white font-display line-clamp-1">
-                      {item.title}
-                    </h4>
-                  </div>
+          {/* Right Column: 2 Stacked Cards on Desktop / 2-Column Side-by-Side on Mobile */}
+          <div className="contents md:flex md:col-span-6 md:flex-col md:gap-3 sm:md:gap-4 lg:md:gap-5 md:justify-between md:h-[450px]">
+            {/* Cover 2: Right Card 1 (Top Horizontal on Desktop / Left Card on Mobile) */}
+            <div
+              onClick={() => handleCoverClick(cover2)}
+              className="col-span-1 group relative rounded-lg sm:rounded-xl overflow-hidden bg-neutral-900 dark:bg-[#111116] border border-neutral-200/90 dark:border-white/10 cursor-pointer transition-all duration-300 hover:border-brand-red/60 hover:shadow-lg hover:-translate-y-0.5 flex flex-col h-[160px] sm:h-[180px] md:h-auto md:flex-1 min-h-0"
+            >
+              <img
+                src={cover2.thumb}
+                alt={cover2.title}
+                className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-90 group-hover:opacity-95 transition-opacity" />
+
+              {/* Gallery Badge Top Right */}
+              <div className="absolute top-2 sm:top-2.5 right-2 sm:right-2.5 rtl:right-auto rtl:left-2 rtl:sm:left-2.5 z-10">
+                <div className="flex items-center space-x-1 rtl:space-x-reverse px-2 py-0.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-[7px] sm:text-[7.5px] font-bold uppercase tracking-wider group-hover:bg-brand-red group-hover:border-brand-red transition-all shadow">
+                  <Layers className="w-2 sm:w-2.5 h-2 sm:h-2.5" />
+                  <span className="hidden xs:inline">{t('graphic.viewGallery', 'VIEW GALLERY')}</span>
+                  <span className="xs:hidden">{isRtl ? 'معرض' : 'VIEW'}</span>
+                  <ArrowUpRight className="w-2 h-2 rtl:rotate-[-90deg]" />
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Interactive Slider Track Under the Images */}
-        <div className="flex flex-col items-center justify-center mt-6 sm:mt-8 space-y-2">
-          {/* Clickable Segmented Dashes */}
-          <div className="flex items-center space-x-2">
-            {Array.from({ length: totalSlides }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`h-1 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentIndex === index
-                    ? 'w-8 sm:w-10 bg-brand-red'
-                    : 'w-4 sm:w-6 bg-neutral-800 hover:bg-neutral-600'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
+              {/* Metadata Bottom */}
+              <div className="absolute bottom-2 sm:bottom-2.5 left-2.5 sm:left-3 right-2.5 sm:right-3 z-10">
+                <span className="text-[6.5px] sm:text-[7.5px] md:text-[8px] font-bold uppercase tracking-widest text-brand-red block mb-0.5">
+                  {cover2.category}
+                </span>
+                <h4 className="text-[10px] sm:text-[10.5px] md:text-[12px] font-black uppercase tracking-tight text-white font-display line-clamp-1">
+                  {cover2.title}
+                </h4>
+                <p className="text-[7.5px] sm:text-[8.5px] text-neutral-300 font-medium mt-0.5 flex items-center gap-1 group-hover:text-white transition-colors">
+                  <span>{cover2.client}</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Cover 3: Right Card 2 (Bottom Horizontal on Desktop / Right Card on Mobile) */}
+            <div
+              onClick={() => handleCoverClick(cover3)}
+              className="col-span-1 group relative rounded-lg sm:rounded-xl overflow-hidden bg-neutral-900 dark:bg-[#111116] border border-neutral-200/90 dark:border-white/10 cursor-pointer transition-all duration-300 hover:border-brand-red/60 hover:shadow-lg hover:-translate-y-0.5 flex flex-col h-[160px] sm:h-[180px] md:h-auto md:flex-1 min-h-0"
+            >
+              <img
+                src={cover3.thumb}
+                alt={cover3.title}
+                className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
               />
-            ))}
-          </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-90 group-hover:opacity-95 transition-opacity" />
 
-          {/* Interactive Range Slider Scrub */}
-          <div className="relative w-36 sm:w-48 h-4 flex items-center justify-center cursor-pointer">
-            <input
-              type="range"
-              min={0}
-              max={maxIndex}
-              value={currentIndex}
-              onChange={(e) => setCurrentIndex(Number(e.target.value))}
-              className="w-full h-1 bg-transparent opacity-0 cursor-pointer"
-              aria-label="Graphic carousel slider scrub"
-            />
+              {/* Gallery Badge Top Right */}
+              <div className="absolute top-2 sm:top-2.5 right-2 sm:right-2.5 rtl:right-auto rtl:left-2 rtl:sm:left-2.5 z-10">
+                <div className="flex items-center space-x-1 rtl:space-x-reverse px-2 py-0.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-[7px] sm:text-[7.5px] font-bold uppercase tracking-wider group-hover:bg-brand-red group-hover:border-brand-red transition-all shadow">
+                  <Layers className="w-2 sm:w-2.5 h-2 sm:h-2.5" />
+                  <span className="hidden xs:inline">{t('graphic.viewGallery', 'VIEW GALLERY')}</span>
+                  <span className="xs:hidden">{isRtl ? 'معرض' : 'VIEW'}</span>
+                  <ArrowUpRight className="w-2 h-2 rtl:rotate-[-90deg]" />
+                </div>
+              </div>
+
+              {/* Metadata Bottom */}
+              <div className="absolute bottom-2 sm:bottom-2.5 left-2.5 sm:left-3 right-2.5 sm:right-3 z-10">
+                <span className="text-[6.5px] sm:text-[7.5px] md:text-[8px] font-bold uppercase tracking-widest text-brand-red block mb-0.5">
+                  {cover3.category}
+                </span>
+                <h4 className="text-[10px] sm:text-[10.5px] md:text-[12px] font-black uppercase tracking-tight text-white font-display line-clamp-1">
+                  {cover3.title}
+                </h4>
+                <p className="text-[7.5px] sm:text-[8.5px] text-neutral-300 font-medium mt-0.5 flex items-center gap-1 group-hover:text-white transition-colors">
+                  <span>{cover3.client}</span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

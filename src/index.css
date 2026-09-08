@@ -5,14 +5,46 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  html.dark {
     color-scheme: dark;
   }
+
+  html.light {
+    color-scheme: light;
+  }
+
   body {
-    background-color: #000000;
-    color: #ffffff;
-    font-family: 'Montserrat', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
     min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+  }
+
+  /* When document is RTL (Arabic mode), prioritize Cairo/Tajawal with ergonomic line-height */
+  [dir="rtl"],
+  [dir="rtl"] body {
+    font-family: 'Cairo', 'Tajawal', 'Montserrat', -apple-system, sans-serif;
+    line-height: 1.65;
+    letter-spacing: normal;
+  }
+
+  /* Dark theme body */
+  html.dark body {
+    background-color: #09090d;
+    color: #f3f4f6;
+  }
+
+  /* Light theme body */
+  html.light body {
+    background-color: #f8f9fa;
+    color: #111827;
   }
 }
 
@@ -25,18 +57,31 @@
 html {
   overflow-y: scroll;
 }
+
 ::-webkit-scrollbar {
   width: 9px;
   height: 9px;
 }
+
 ::-webkit-scrollbar-track {
   background: rgba(17, 17, 19, 0.9);
 }
+
+html.light ::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #4a4a52;
   border-radius: 9999px;
   border: 2px solid rgba(17, 17, 19, 0.9);
 }
+
+html.light ::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border: 2px solid #e5e7eb;
+}
+
 ::-webkit-scrollbar-thumb:hover,
 ::-webkit-scrollbar-thumb:active {
   background: #FF1E27;
@@ -56,40 +101,25 @@ html {
   box-shadow: 0 0 40px rgba(255, 30, 39, 0.4);
 }
 
-/* Red Border Lighting Animation for Graphic Section */
-@keyframes redBorderGlow {
-  0%, 100% {
-    border-color: rgba(255, 30, 39, 0.7);
-    box-shadow: 0 0 16px rgba(255, 30, 39, 0.5), inset 0 0 10px rgba(255, 30, 39, 0.2);
-  }
-  50% {
-    border-color: rgba(255, 30, 39, 1);
-    box-shadow: 0 0 32px rgba(255, 30, 39, 0.85), 0 0 60px rgba(255, 30, 39, 0.4), inset 0 0 16px rgba(255, 30, 39, 0.3);
-  }
-}
-
-.border-glow-active {
-  border-color: #FF1E27 !important;
-  animation: redBorderGlow 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-/* Turn off red lighting when hovered */
-.border-glow-active:hover {
-  animation: none !important;
-  border-color: rgba(255, 255, 255, 0.25) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9) !important;
-}
-
 /* Infinite Marquee animations */
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes marquee-reverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0%); }
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
 }
 
 .animate-marquee {
@@ -115,6 +145,7 @@ html {
 .portfolio-card {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
+
 .portfolio-card:hover {
   transform: translateY(-3px);
 }
@@ -125,10 +156,12 @@ html {
     transform: translate(-50%, -50%) scale(1);
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
   }
+
   70% {
     transform: translate(-50%, -50%) scale(1.06);
     box-shadow: 0 0 0 12px rgba(255, 255, 255, 0);
   }
+
   100% {
     transform: translate(-50%, -50%) scale(1);
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
@@ -137,4 +170,419 @@ html {
 
 .play-pulse {
   animation: playPulse 2.4s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Modal & Floating Popup Scale-up */
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-scaleUp {
+  animation: scaleUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==========================================================================
+   DEVOTIX - VIDEO SECTION & POPUP VAULT STYLES (VANILLA CSS)
+   ========================================================================== */
+
+/* 1. SECTION WRAPPER & CONTAINER */
+#production {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem 1rem 2rem 1rem;
+  scroll-margin-top: 60px;
+}
+
+@media (min-width: 640px) {
+  #production {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  #production {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.production-container {
+  max-width: 64rem;
+  /* 1024px */
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* 2. SECTION HEADER & UPPER-RIGHT "MORE VIDEOS" BUTTON */
+.production-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(23, 23, 23, 0.8);
+}
+
+.production-header-text {
+  text-align: center;
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.production-header-sub {
+  margin-top: 0.375rem;
+  font-size: 11px;
+  color: #a3a3a3;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.625;
+}
+
+/* Upper Right "MORE VIDEOS" Action Button */
+.more-videos-btn-wrapper {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+}
+
+[dir="rtl"] .more-videos-btn-wrapper {
+  right: auto;
+  left: 0;
+}
+
+@media (max-width: 640px) {
+  .production-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .more-videos-btn-wrapper {
+    position: static;
+    margin-top: 0.25rem;
+  }
+}
+
+.more-videos-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid #262626;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #d4d4d4;
+  background-color: rgba(10, 10, 10, 0.8);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* Alternating Section Themes (A / B Color Rhythm with Eye-Comfort Tone) */
+.section-alt-a {
+  background-color: #ffffff;
+  color: #111827;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+html.dark .section-alt-a {
+  background-color: #09090d;
+  color: #f3f4f6;
+}
+
+.section-alt-b {
+  background-color: #f4f6fa;
+  color: #111827;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+html.dark .section-alt-b {
+  background-color: #13131b;
+  color: #f3f4f6;
+}
+
+/* Glassmorphism Card Style */
+.card-glass {
+  background: rgba(18, 18, 22, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-glass:hover {
+  border-color: rgba(255, 30, 39, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 30, 39, 0.15);
+  transform: translateY(-2px);
+}
+
+.more-videos-btn:hover {
+  border-color: #FF1E27;
+  color: #ffffff;
+  background-color: #171717;
+}
+
+.more-videos-btn .icon {
+  width: 14px;
+  height: 14px;
+  color: #FF1E27;
+  transition: transform 0.2s ease;
+}
+
+.more-videos-btn:hover .icon {
+  transform: scale(1.1);
+}
+
+/* 3. VIDEO CARDS GRID */
+.video-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* 4. INLINE VIDEO CARD STYLING */
+.video-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background-color: #0a0a0a;
+  border: 1px solid #262626;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.video-card:hover {
+  border-color: rgba(255, 30, 39, 0.6);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.video-aspect-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #171717;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-aspect-container video,
+.video-aspect-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Prevents black letterbox bars */
+  transition: transform 0.5s ease-out;
+}
+
+.video-card:hover .video-aspect-container video,
+.video-card:hover .video-aspect-container img {
+  transform: scale(1.05);
+}
+
+/* Gradient Overlay */
+.video-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #000000 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.video-card:hover .video-gradient-overlay {
+  opacity: 0.4;
+}
+
+/* Top Tag Badge */
+.video-tag-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  font-family: monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.25rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FF1E27;
+  backdrop-filter: blur(8px);
+}
+
+[dir="rtl"] .video-tag-badge {
+  left: auto;
+  right: 0.75rem;
+}
+
+/* Expand Icon Top Right */
+.video-expand-icon {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+[dir="rtl"] .video-expand-icon {
+  right: auto;
+  left: 0.75rem;
+}
+
+.video-card:hover .video-expand-icon {
+  opacity: 1;
+}
+
+.video-expand-icon-btn {
+  padding: 0.5rem;
+  border-radius: 9999px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bottom Overlay Title & Category */
+.video-card-info {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.video-card-category {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #FF1E27;
+  display: block;
+  margin-bottom: 0.125rem;
+}
+
+.video-card-title {
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+/* 5. POPUP GALLERY MODAL (MoreVideosModal.jsx) */
+.more-videos-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(24px);
+}
+
+.more-videos-dialog {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 64rem;
+  background-color: #0a0a0a;
+  border: 1px solid rgba(38, 38, 38, 0.9);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+/* Category Filter Tabs Bar (Static Layout, No Slider) */
+.more-videos-tabs-bar {
+  position: relative;
+  z-index: 20;
+  padding: 0.875rem 1.5rem;
+  background-color: #0a0a0a;
+  border-bottom: 1px solid rgba(38, 38, 38, 0.8);
+}
+
+.more-videos-tabs-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.625rem;
+}
+
+.category-tab-btn {
+  height: 2.25rem;
+  /* 36px */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.5rem;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+}
+
+.category-tab-btn.active {
+  background-color: #FF1E27;
+  color: #ffffff;
+  border-color: #FF1E27;
+}
+
+.category-tab-btn.inactive {
+  background-color: #171717;
+  color: #a3a3a3;
+  border-color: #262626;
+}
+
+.category-tab-btn.inactive:hover {
+  color: #ffffff;
+  background-color: #262626;
+}
+
+/* 6. FULL-SCREEN VIDEO PLAYER (VideoModal.jsx) */
+.video-modal-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Fills screen cleanly without black bars */
 }

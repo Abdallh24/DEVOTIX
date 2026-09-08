@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { X, Send, CheckCircle2, Sparkles, Mail, Phone, MapPin } from 'lucide-react';
+import { X, Send, CheckCircle2 } from 'lucide-react';
+import { useThemeLanguage } from '../context/ThemeLanguageContext';
 
 export default function ContactModal({ isOpen, onClose }) {
+  const { t, isRtl } = useThemeLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -12,7 +14,14 @@ export default function ContactModal({ isOpen, onClose }) {
     message: ''
   });
 
-  const availableServices = [
+  const availableServices = isRtl ? [
+    'الإنتاج المرئي والسينمائي',
+    'صناعة المحتوى الإبداعي',
+    'الهوية البصرية والعلامة التجارية',
+    'هندسة وتطوير البرمجيات',
+    'إدارة الإعلانات والميديا باينج',
+    'التصوير الفوتوغرافي التجاري'
+  ] : [
     'Video Production',
     'Content Creation',
     'Brand Identity',
@@ -56,9 +65,6 @@ export default function ContactModal({ isOpen, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
-    setTimeout(() => {
-      // Allow user to view confirmation, then close
-    }, 2000);
   };
 
   const handleReset = () => {
@@ -82,19 +88,19 @@ export default function ContactModal({ isOpen, onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-neutral-800 bg-neutral-900/40">
           <div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
               <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
               <span className="text-[11px] font-bold tracking-widest uppercase text-brand-red">
-                START A PROJECT
+                {isRtl ? 'ابدأ مشروعاً جديداً' : 'START A PROJECT'}
               </span>
             </div>
             <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white font-display mt-0.5">
-              LET'S TALK
+              {t('nav.letsTalk')}
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-neutral-900 hover:bg-brand-red hover:text-white text-neutral-400 flex items-center justify-center transition-colors border border-neutral-800"
+            className="w-9 h-9 rounded-full bg-neutral-900 hover:bg-brand-red hover:text-white text-neutral-400 flex items-center justify-center transition-colors border border-neutral-800 cursor-pointer"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -109,16 +115,16 @@ export default function ContactModal({ isOpen, onClose }) {
                 <CheckCircle2 className="w-9 h-9" />
               </div>
               <h4 className="text-2xl font-black uppercase tracking-tight text-white font-display">
-                MESSAGE RECEIVED
+                {t('modals.sendSuccess')}
               </h4>
               <p className="mt-2 text-sm text-neutral-400 max-w-md font-medium">
-                Thank you for reaching out to Devotix. Our creative director and production team will review your project and get back to you within 24 hours.
+                {t('modals.sendSuccessDesc')}
               </p>
               <button
                 onClick={handleReset}
-                className="mt-8 px-8 py-3 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded-md transition-colors"
+                className="mt-8 px-8 py-3 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded-md transition-colors cursor-pointer"
               >
-                Back to Site
+                {t('nav.backToHome')}
               </button>
             </div>
           ) : (
@@ -126,7 +132,7 @@ export default function ContactModal({ isOpen, onClose }) {
               {/* Service tags multi-select */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-3">
-                  Services Needed
+                  {t('modals.serviceLabel')}
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {availableServices.map((service) => {
@@ -136,7 +142,7 @@ export default function ContactModal({ isOpen, onClose }) {
                         type="button"
                         key={service}
                         onClick={() => toggleService(service)}
-                        className={`text-xs font-semibold uppercase px-3.5 py-2 rounded-lg border transition-all ${
+                        className={`text-xs font-semibold uppercase px-3.5 py-2 rounded-lg border transition-all cursor-pointer ${
                           selected
                             ? 'bg-brand-red text-white border-brand-red shadow-md shadow-red-600/30'
                             : 'bg-neutral-900/80 text-neutral-400 border-neutral-800 hover:border-neutral-700 hover:text-white'
@@ -153,27 +159,27 @@ export default function ContactModal({ isOpen, onClose }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">
-                    Your Name *
+                    {t('modals.nameLabel')} *
                   </label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Jane Doe"
+                    placeholder={t('modals.namePlaceholder')}
                     className="w-full px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-lg text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-brand-red transition-colors"
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">
-                    Email Address *
+                    {t('modals.emailLabel')} *
                   </label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="jane@company.com"
+                    placeholder={t('modals.emailPlaceholder')}
                     className="w-full px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-lg text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-brand-red transition-colors"
                   />
                 </div>
@@ -183,7 +189,7 @@ export default function ContactModal({ isOpen, onClose }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">
-                    Company / Brand
+                    {isRtl ? 'الشركة / العلامة التجارية' : 'Company / Brand'}
                   </label>
                   <input
                     type="text"
@@ -195,12 +201,12 @@ export default function ContactModal({ isOpen, onClose }) {
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">
-                    Estimated Budget
+                    {isRtl ? 'الميزانية التقديرية' : 'Estimated Budget'}
                   </label>
                   <select
                     value={formData.budget}
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                    className="w-full px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-lg text-white text-sm focus:outline-none focus:border-brand-red transition-colors"
+                    className="w-full px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-lg text-white text-sm focus:outline-none focus:border-brand-red transition-colors cursor-pointer"
                   >
                     {budgetOptions.map((b) => (
                       <option key={b} value={b} className="bg-neutral-950 text-white">
@@ -214,13 +220,13 @@ export default function ContactModal({ isOpen, onClose }) {
               {/* Message */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">
-                  Project Details
+                  {t('modals.messageLabel')}
                 </label>
                 <textarea
                   rows="4"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell us about your brand vision, goals, and expected timeline..."
+                  placeholder={t('modals.messagePlaceholder')}
                   className="w-full px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-lg text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-brand-red transition-colors resize-none"
                 />
               </div>
@@ -229,10 +235,10 @@ export default function ContactModal({ isOpen, onClose }) {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-4 bg-brand-red hover:bg-brand-redHover text-white text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg transition-all transform hover:scale-[1.01] shadow-lg shadow-red-600/30 flex items-center justify-center space-x-2"
+                  className="w-full py-4 bg-brand-red hover:bg-brand-redHover text-white text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg transition-all transform hover:scale-[1.01] shadow-lg shadow-red-600/30 flex items-center justify-center space-x-2 rtl:space-x-reverse cursor-pointer"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>SUBMIT INQUIRY</span>
+                  <Send className="w-4 h-4 rtl:rotate-180" />
+                  <span>{t('modals.submitInquiry')}</span>
                 </button>
               </div>
             </form>

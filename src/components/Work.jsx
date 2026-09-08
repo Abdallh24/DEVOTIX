@@ -1,9 +1,12 @@
 import React from 'react';
 import TitleAccent from './TitleAccent';
-import { ArrowUpRight, Code, Sparkles } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { SOFTWARE_PROJECTS } from '../data/projectsData';
+import { useThemeLanguage } from '../context/ThemeLanguageContext';
 
 export default function Work({ onSelectProject, onRequestSimilarWork }) {
+  const { isRtl, isDark, t } = useThemeLanguage();
+
   const handleProjectClick = (project, e) => {
     if (e) e.stopPropagation();
     if (onSelectProject) {
@@ -11,80 +14,83 @@ export default function Work({ onSelectProject, onRequestSimilarWork }) {
     }
   };
 
+  const project1 = SOFTWARE_PROJECTS[0];
+  const otherProjects = SOFTWARE_PROJECTS.slice(1, 3);
+
   return (
-    <section id="work" className="snap-section relative flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-black text-white pt-16 pb-12">
+    <section id="work" className="snap-section relative flex flex-col justify-center px-3.5 sm:px-6 lg:px-8 section-alt-a pt-14 pb-12 sm:pt-18 sm:pb-16 select-none">
       <div className="max-w-5xl mx-auto w-full">
         {/* Section Header: Title & Description */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 sm:pb-6 border-b border-neutral-900">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 sm:pb-6 border-b border-neutral-200/80 dark:border-white/10">
           <div>
             <TitleAccent type="work" />
           </div>
           <div className="sm:max-w-md">
-            <p className="text-[10px] sm:text-[11px] text-neutral-400 font-medium uppercase tracking-wider leading-relaxed">
-              Custom software engineering, bespoke web platforms, and digital product architecture built for market leaders.
+            <p className="text-[10px] sm:text-[11.5px] text-neutral-600 dark:text-neutral-400 font-medium uppercase tracking-wider leading-relaxed">
+              {t('work.subtitle', 'Custom software engineering, bespoke web platforms, and digital product architecture built for market leaders.')}
             </p>
           </div>
         </div>
 
-        {/* Portfolio Projects Grid (3 Projects: Car Hub, Egy Color, Meltix Burger) */}
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-          {/* Main Featured Project: CAR HUB (Large 7-Col Card) */}
+        {/* Portfolio Projects Grid (Main Banner + 2-Col Grid on Mobile | 7-Col + 5-Col on Desktop) */}
+        <div className="mt-6 sm:mt-8 grid grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-8 items-stretch">
+          {/* Main Featured Project: CAR HUB (Full-width on Mobile, Large 7-Col Card on Desktop) */}
           <div
-            onClick={(e) => handleProjectClick(SOFTWARE_PROJECTS[0], e)}
-            className="lg:col-span-7 group cursor-pointer flex flex-col"
+            onClick={(e) => handleProjectClick(project1, e)}
+            className="col-span-2 lg:col-span-7 group cursor-pointer flex flex-col"
           >
-            <div className="relative overflow-hidden rounded-xl bg-neutral-950 border border-neutral-800/80 transition-all duration-300 group-hover:border-brand-red/50 group-hover:shadow-2xl group-hover:shadow-red-950/20 flex-1 flex flex-col">
+            <div className="relative overflow-hidden rounded-xl bg-white dark:bg-[#111116] border border-neutral-200/90 dark:border-white/10 transition-all duration-300 group-hover:border-brand-red/50 group-hover:shadow-2xl group-hover:shadow-red-950/20 flex-1 flex flex-col shadow-sm">
               {/* Cover Image */}
-              <div className="relative w-full aspect-[16/10] max-h-[280px] sm:max-h-[320px] overflow-hidden bg-neutral-900">
+              <div className="relative w-full aspect-[16/10] max-h-[200px] sm:max-h-[260px] lg:max-h-[320px] overflow-hidden bg-neutral-900">
                 <img
-                  src={SOFTWARE_PROJECTS[0].image}
-                  alt={SOFTWARE_PROJECTS[0].title}
+                  src={project1.image}
+                  alt={project1.title}
                   className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
 
                 {/* Top Corner Logo Badge for CAR HUB (White Container) */}
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 p-2 sm:p-2.5 rounded-xl bg-white shadow-lg border border-white/20 flex items-center gap-2 max-w-[150px]">
+                <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 rtl:left-auto rtl:right-2.5 rtl:sm:right-4 z-10 p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-white shadow-lg border border-white/20 flex items-center gap-1.5 sm:gap-2 max-w-[130px] sm:max-w-[150px]">
                   <img
-                    src={SOFTWARE_PROJECTS[0].logo}
-                    alt={`${SOFTWARE_PROJECTS[0].title} logo`}
-                    className="h-6 sm:h-7 w-auto object-contain"
+                    src={project1.logo}
+                    alt={`${project1.title} logo`}
+                    className="h-5 sm:h-7 w-auto object-contain"
                   />
-                  <span className="text-[9px] font-black uppercase tracking-wider text-black font-display">
-                    {SOFTWARE_PROJECTS[0].title}
+                  <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-black font-display">
+                    {project1.title}
                   </span>
                 </div>
 
-                {/* Floating Request Similar Work Button */}
-                <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-10">
+                {/* Floating View Project Button */}
+                <div className="absolute bottom-2.5 right-2.5 sm:bottom-4 sm:right-4 rtl:right-auto rtl:left-2.5 rtl:sm:left-4 z-10">
                   <button
-                    onClick={(e) => handleProjectClick(SOFTWARE_PROJECTS[0], e)}
-                    className="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-brand-red hover:bg-brand-redHover text-white text-[10px] sm:text-xs font-extrabold uppercase tracking-wider rounded-lg shadow-lg shadow-red-600/30 flex items-center space-x-1.5 transition-all transform group-hover:scale-105"
+                    onClick={(e) => handleProjectClick(project1, e)}
+                    className="px-2.5 py-1 sm:px-4 sm:py-2 bg-brand-red hover:bg-brand-redHover text-white text-[9px] sm:text-xs font-extrabold uppercase tracking-wider rounded-md sm:rounded-lg shadow-lg shadow-red-600/30 flex items-center space-x-1 sm:space-x-1.5 rtl:space-x-reverse transition-all transform group-hover:scale-105"
                   >
-                    <span>VIEW PROJECT</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
+                    <span>{t('work.viewCaseStudy', 'VIEW PROJECT')}</span>
+                    <ArrowUpRight className="w-3 sm:w-3.5 h-3 sm:h-3.5 rtl:rotate-[-90deg]" />
                   </button>
                 </div>
               </div>
 
               {/* Metadata area */}
-              <div className="p-4 sm:p-5 flex flex-col justify-between flex-1 bg-neutral-950">
+              <div className="p-3.5 sm:p-5 flex flex-col justify-between flex-1 bg-white dark:bg-[#111116]">
                 <div>
-                  <h3 className="text-lg sm:text-xl font-black tracking-tight uppercase group-hover:text-brand-red transition-colors flex items-center gap-1.5 font-display text-white">
-                    {SOFTWARE_PROJECTS[0].title}
-                    <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-brand-red" />
+                  <h3 className="text-sm sm:text-lg lg:text-xl font-black tracking-tight uppercase group-hover:text-brand-red transition-colors flex items-center gap-1.5 font-display text-neutral-900 dark:text-white">
+                    {project1.title}
+                    <ArrowUpRight className="w-3.5 sm:w-4 h-3.5 sm:h-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-brand-red rtl:rotate-[-90deg]" />
                   </h3>
-                  <p className="text-[10px] sm:text-[11px] text-neutral-400 font-semibold tracking-wider uppercase mt-1">
-                    {SOFTWARE_PROJECTS[0].category}
+                  <p className="text-[8.5px] sm:text-[10px] lg:text-[11px] text-neutral-500 dark:text-neutral-400 font-semibold tracking-wider uppercase mt-0.5 sm:mt-1">
+                    {project1.category}
                   </p>
-                  <p className="text-xs text-neutral-400 mt-2 line-clamp-2 leading-relaxed font-medium">
-                    {SOFTWARE_PROJECTS[0].description}
+                  <p className="text-[10px] sm:text-xs text-neutral-600 dark:text-neutral-400 mt-1.5 sm:mt-2 line-clamp-2 leading-relaxed font-medium">
+                    {project1.description}
                   </p>
                 </div>
 
-                <div className="flex items-center gap-1.5 mt-4">
-                  {SOFTWARE_PROJECTS[0].tags.map((tag) => (
-                    <span key={tag} className="text-[8.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-neutral-900 text-neutral-400 border border-neutral-800">
+                <div className="flex items-center gap-1 sm:gap-1.5 mt-3 sm:mt-4 flex-wrap">
+                  {project1.tags.map((tag) => (
+                    <span key={tag} className="text-[7.5px] sm:text-[8.5px] font-bold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 rounded bg-neutral-100 dark:bg-[#181822] text-neutral-700 dark:text-neutral-300 border border-neutral-200/80 dark:border-white/10">
                       {tag}
                     </span>
                   ))}
@@ -93,17 +99,17 @@ export default function Work({ onSelectProject, onRequestSimilarWork }) {
             </div>
           </div>
 
-          {/* Secondary Stacked Cards (EGY COLOR & MELTIX BURGER: 5-Col Grid) */}
-          <div className="lg:col-span-5 flex flex-col space-y-6">
-            {SOFTWARE_PROJECTS.slice(1, 3).map((project) => (
+          {/* Secondary Cards (2-Col Grid on Mobile | 5-Col Stacked on Desktop) */}
+          <div className="col-span-2 lg:col-span-5 grid grid-cols-2 lg:flex lg:flex-col gap-2.5 sm:gap-4 lg:gap-6">
+            {otherProjects.map((project) => (
               <div
                 key={project.id}
                 onClick={(e) => handleProjectClick(project, e)}
-                className="group cursor-pointer flex-1"
+                className="col-span-1 group cursor-pointer flex flex-col flex-1"
               >
-                <div className="relative overflow-hidden rounded-xl bg-neutral-950 border border-neutral-800/80 transition-all duration-300 group-hover:border-brand-red/50 group-hover:shadow-2xl group-hover:shadow-red-950/20">
+                <div className="relative overflow-hidden rounded-xl bg-white dark:bg-[#111116] border border-neutral-200/90 dark:border-white/10 transition-all duration-300 group-hover:border-brand-red/50 group-hover:shadow-2xl group-hover:shadow-red-950/20 shadow-sm flex-1 flex flex-col">
                   {/* Cover Image */}
-                  <div className="relative w-full aspect-[16/9] max-h-[170px] sm:max-h-[190px] overflow-hidden bg-neutral-900">
+                  <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] max-h-[140px] sm:max-h-[190px] overflow-hidden bg-neutral-900">
                     <img
                       src={project.image}
                       alt={project.title}
@@ -112,47 +118,51 @@ export default function Work({ onSelectProject, onRequestSimilarWork }) {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
 
                     {/* Logo badge (White Container) */}
-                    <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 p-1.5 sm:p-2 rounded-xl bg-white shadow-md border border-white/20 flex items-center gap-1.5">
+                    <div className="absolute top-2 left-2 sm:top-3 sm:left-3 rtl:left-auto rtl:right-2 rtl:sm:right-3 z-10 p-1 sm:p-2 rounded-lg bg-white shadow-md border border-white/20 flex items-center gap-1 sm:gap-1.5">
                       <img
                         src={project.logo}
                         alt={`${project.title} logo`}
-                        className="h-5 sm:h-6 w-auto object-contain"
+                        className="h-4 sm:h-6 w-auto object-contain"
                       />
-                      <span className="text-[8.5px] font-black uppercase tracking-wider text-black font-display">
+                      <span className="text-[7.5px] sm:text-[8.5px] font-black uppercase tracking-wider text-black font-display">
                         {project.title}
                       </span>
                     </div>
 
-                    {/* Request Similar Work Button */}
-                    <div className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 z-10">
+                    {/* View Project Button */}
+                    <div className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 rtl:right-auto rtl:left-2 rtl:sm:left-3 z-10">
                       <button
                         onClick={(e) => handleProjectClick(project, e)}
-                        className="px-3 py-1 sm:px-3.5 sm:py-1.5 bg-brand-red hover:bg-brand-redHover text-white text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider rounded-md shadow-md shadow-red-600/30 flex items-center space-x-1 transition-all transform group-hover:scale-105"
+                        className="px-2 py-0.5 sm:px-3 sm:py-1.5 bg-brand-red hover:bg-brand-redHover text-white text-[8px] sm:text-[10px] font-extrabold uppercase tracking-wider rounded-md shadow-md shadow-red-600/30 flex items-center space-x-0.5 sm:space-x-1 rtl:space-x-reverse transition-all transform group-hover:scale-105"
                       >
-                        <span>VIEW PROJECT</span>
-                        <ArrowUpRight className="w-3 h-3" />
+                        <span className="hidden xs:inline">{t('work.viewCaseStudy', 'VIEW')}</span>
+                        <span className="xs:hidden">{isRtl ? 'عرض' : 'VIEW'}</span>
+                        <ArrowUpRight className="w-2.5 sm:w-3 h-2.5 sm:h-3 rtl:rotate-[-90deg]" />
                       </button>
                     </div>
                   </div>
 
                   {/* Metadata */}
-                  <div className="p-3.5 sm:p-4 bg-neutral-950">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-base font-black tracking-tight uppercase group-hover:text-brand-red transition-colors flex items-center gap-1 font-display text-white">
-                        {project.title}
-                        <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-brand-red" />
-                      </h3>
-                      <div className="flex items-center gap-1">
-                        {project.tags.map((tag) => (
-                          <span key={tag} className="text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-neutral-900 text-neutral-400 border border-neutral-800">
-                            {tag}
-                          </span>
-                        ))}
+                  <div className="p-2.5 sm:p-4 bg-white dark:bg-[#111116] flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between gap-1">
+                        <h3 className="text-xs sm:text-base font-black tracking-tight uppercase group-hover:text-brand-red transition-colors flex items-center gap-1 font-display text-neutral-900 dark:text-white line-clamp-1">
+                          {project.title}
+                          <ArrowUpRight className="w-3 sm:w-3.5 h-3 sm:h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-brand-red rtl:rotate-[-90deg]" />
+                        </h3>
                       </div>
+                      <p className="text-[7.5px] sm:text-[10px] text-neutral-500 dark:text-neutral-400 font-semibold tracking-wider uppercase mt-0.5 line-clamp-1">
+                        {project.category}
+                      </p>
                     </div>
-                    <p className="text-[10px] text-neutral-400 font-semibold tracking-wider uppercase mt-0.5">
-                      {project.category}
-                    </p>
+
+                    <div className="flex items-center gap-1 flex-wrap mt-2">
+                      {project.tags.slice(0, 2).map((tag) => (
+                        <span key={tag} className="text-[7px] sm:text-[8px] font-bold uppercase tracking-wider px-1 sm:px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-[#181822] text-neutral-700 dark:text-neutral-300 border border-neutral-200/80 dark:border-white/10">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -163,4 +173,3 @@ export default function Work({ onSelectProject, onRequestSimilarWork }) {
     </section>
   );
 }
-

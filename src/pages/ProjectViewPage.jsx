@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, Play, ExternalLink, Maximize2 } from 'lucide-react';
 import Footer from '../components/Footer';
+import { useThemeLanguage } from '../context/ThemeLanguageContext';
 
 export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVideo, onOpenLightbox, onOpenPolicy }) {
+  const { t, isRtl } = useThemeLanguage();
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
@@ -96,38 +99,38 @@ export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVide
   };
 
   return (
-    <div className="bg-white text-black font-sans selection:bg-brand-red selection:text-white">
+    <div className="bg-white dark:bg-black text-neutral-900 dark:text-white font-sans selection:bg-brand-red selection:text-white transition-colors duration-300">
       {/* 1. Project Title Section (Fits Full Screen View) */}
-      <section id="view-title" className="snap-section min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white text-black pt-16 pb-6">
+      <section id="view-title" className="snap-section min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white dark:bg-black text-neutral-900 dark:text-white pt-16 pb-6">
         <div className="max-w-5xl mx-auto w-full my-auto">
           {/* Back Button */}
           <button
             onClick={onBackToPortfolio}
-            className="inline-flex items-center space-x-1.5 text-xs font-bold text-neutral-600 hover:text-brand-red transition-colors uppercase mb-6 group"
+            className="inline-flex items-center space-x-1.5 rtl:space-x-reverse text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:text-brand-red dark:hover:text-brand-red transition-colors uppercase mb-6 group"
           >
-            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-            <span>Back to Portfolio</span>
+            <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-180 group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform" />
+            <span>{t('pages.projectView.backToPortfolio')}</span>
           </button>
 
           {/* Left Red Vertical Accent Line */}
-          <div className="border-l-4 border-brand-red pl-5 sm:pl-7 py-2">
+          <div className="border-l-4 rtl:border-l-0 rtl:border-r-4 border-brand-red pl-5 rtl:pl-0 rtl:pr-5 sm:pl-7 sm:rtl:pr-7 py-2">
             {/* Status Row */}
-            <div className="flex items-center space-x-2.5 mb-3">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-neutral-500">
-                STATUS
+            <div className="flex items-center space-x-2.5 rtl:space-x-reverse mb-3">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
+                {t('pages.projectView.status')}
               </span>
               <span className="bg-emerald-500 text-white font-extrabold text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-full shadow-sm">
-                COMPLETED
+                {t('pages.projectView.completed')}
               </span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-black font-display leading-[1.05]">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-neutral-900 dark:text-white font-display leading-[1.05]">
               {projectData.title}
             </h1>
 
             {/* Subtitle */}
-            <p className="mt-3.5 text-sm sm:text-base text-neutral-600 font-medium max-w-2xl leading-relaxed">
+            <p className="mt-3.5 text-sm sm:text-base text-neutral-600 dark:text-neutral-300 font-medium max-w-2xl leading-relaxed">
               {projectData.subtitle}
             </p>
           </div>
@@ -135,10 +138,10 @@ export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVide
       </section>
 
       {/* 2. Video Section (Fits Full Screen View) */}
-      <section id="view-video" className="snap-section min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white text-black pt-16 pb-6">
+      <section id="view-video" className="snap-section min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white dark:bg-black text-neutral-900 dark:text-white pt-16 pb-6">
         <div className="max-w-5xl mx-auto w-full my-auto">
-          <span className="text-[11px] font-extrabold uppercase tracking-widest text-neutral-500 block mb-3">
-            VIDEO
+          <span className="text-[11px] font-extrabold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 block mb-3">
+            {t('pages.projectView.video')}
           </span>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
@@ -146,7 +149,7 @@ export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVide
               <div
                 key={vid.id}
                 onClick={() => onPlayVideo && onPlayVideo(vid)}
-                className="group relative aspect-[16/10] max-h-[270px] sm:max-h-[310px] rounded-lg overflow-hidden bg-neutral-950 border border-neutral-200 shadow-md cursor-pointer"
+                className="group relative aspect-[16/10] max-h-[270px] sm:max-h-[310px] rounded-lg overflow-hidden bg-neutral-950 border border-neutral-200 dark:border-neutral-800 shadow-md cursor-pointer"
               >
                 <img
                   src={vid.image}
@@ -168,10 +171,10 @@ export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVide
       </section>
 
       {/* 3. Photography Section (Fits Full Screen View) */}
-      <section id="view-photo" className="snap-section min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white text-black pt-16 pb-6">
+      <section id="view-photo" className="snap-section min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white dark:bg-black text-neutral-900 dark:text-white pt-16 pb-6">
         <div className="max-w-5xl mx-auto w-full my-auto">
-          <span className="text-[11px] font-extrabold uppercase tracking-widest text-neutral-500 block mb-3">
-            PHOTOGRAPHY
+          <span className="text-[11px] font-extrabold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 block mb-3">
+            {t('pages.projectView.photography')}
           </span>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -179,7 +182,7 @@ export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVide
               <div
                 key={`photo-${photo.id}`}
                 onClick={() => onOpenLightbox && onOpenLightbox(photos, index)}
-                className="group relative aspect-square max-h-[190px] sm:max-h-[240px] rounded-lg overflow-hidden bg-neutral-100 border border-neutral-200 cursor-pointer shadow-sm transition-all hover:shadow-md"
+                className="group relative aspect-square max-h-[190px] sm:max-h-[240px] rounded-lg overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 cursor-pointer shadow-sm transition-all hover:shadow-md"
               >
                 <img
                   src={photo.image}
@@ -198,10 +201,10 @@ export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVide
       </section>
 
       {/* 4. Backstage Section (Fits Full Screen View) */}
-      <section id="view-backstage" className="snap-section min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white text-black pt-16 pb-6">
+      <section id="view-backstage" className="snap-section min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white dark:bg-black text-neutral-900 dark:text-white pt-16 pb-6">
         <div className="max-w-5xl mx-auto w-full my-auto">
-          <span className="text-[11px] font-extrabold uppercase tracking-widest text-neutral-500 block mb-3">
-            BACKSTAGE
+          <span className="text-[11px] font-extrabold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 block mb-3">
+            {t('pages.projectView.backstage')}
           </span>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -209,7 +212,7 @@ export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVide
               <div
                 key={`backstage-${photo.id}`}
                 onClick={() => onOpenLightbox && onOpenLightbox(backstagePhotos, index)}
-                className="group relative aspect-square max-h-[190px] sm:max-h-[240px] rounded-lg overflow-hidden bg-neutral-100 border border-neutral-200 cursor-pointer shadow-sm transition-all hover:shadow-md"
+                className="group relative aspect-square max-h-[190px] sm:max-h-[240px] rounded-lg overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 cursor-pointer shadow-sm transition-all hover:shadow-md"
               >
                 <img
                   src={photo.image}
@@ -228,18 +231,18 @@ export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVide
       </section>
 
       {/* 5. Project Details & Text Section + Footer (Fits Full Screen View) */}
-      <section id="view-details" className="snap-section min-h-screen flex flex-col justify-between px-4 sm:px-6 lg:px-8 bg-white text-black pt-16 pb-0 overflow-hidden">
+      <section id="view-details" className="snap-section min-h-screen flex flex-col justify-between px-4 sm:px-6 lg:px-8 bg-white dark:bg-black text-neutral-900 dark:text-white pt-16 pb-0 overflow-hidden">
         <div className="max-w-5xl mx-auto w-full my-auto py-6">
-          <div className="border-t border-neutral-200 pt-6 sm:pt-8 space-y-5 sm:space-y-6">
+          <div className="border-t border-neutral-200 dark:border-neutral-800 pt-6 sm:pt-8 space-y-5 sm:space-y-6">
             {/* Row 1: Description */}
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-1.5 sm:gap-6 items-start">
               <div className="sm:col-span-3">
-                <span className="text-[11px] font-black uppercase tracking-widest text-neutral-700 block">
-                  DESCRIPTION
+                <span className="text-[11px] font-black uppercase tracking-widest text-neutral-700 dark:text-neutral-300 block">
+                  {t('pages.projectView.description')}
                 </span>
               </div>
               <div className="sm:col-span-9">
-                <p className="text-xs sm:text-sm text-neutral-600 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 font-medium leading-relaxed">
                   {projectData.description}
                 </p>
               </div>
@@ -248,12 +251,12 @@ export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVide
             {/* Row 2: Our Solution */}
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-1.5 sm:gap-6 items-start">
               <div className="sm:col-span-3">
-                <span className="text-[11px] font-black uppercase tracking-widest text-neutral-700 block">
-                  OUR SOLUTION
+                <span className="text-[11px] font-black uppercase tracking-widest text-neutral-700 dark:text-neutral-300 block">
+                  {t('pages.projectView.solution')}
                 </span>
               </div>
               <div className="sm:col-span-9">
-                <p className="text-xs sm:text-sm text-neutral-600 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 font-medium leading-relaxed">
                   {projectData.solution}
                 </p>
               </div>
@@ -262,8 +265,8 @@ export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVide
             {/* Row 3: Link */}
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-1.5 sm:gap-6 items-start">
               <div className="sm:col-span-3">
-                <span className="text-[11px] font-black uppercase tracking-widest text-neutral-700 block">
-                  LINK
+                <span className="text-[11px] font-black uppercase tracking-widest text-neutral-700 dark:text-neutral-300 block">
+                  {t('pages.projectView.link')}
                 </span>
               </div>
               <div className="sm:col-span-9">
@@ -271,7 +274,7 @@ export default function ProjectViewPage({ project, onBackToPortfolio, onPlayVide
                   href={projectData.link || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-brand-red hover:underline"
+                  className="inline-flex items-center space-x-1.5 rtl:space-x-reverse text-xs sm:text-sm font-bold text-brand-red hover:underline"
                 >
                   <span>{projectData.link || 'https://luminacore.analytics.devotix.io'}</span>
                   <ExternalLink className="w-3.5 h-3.5" />

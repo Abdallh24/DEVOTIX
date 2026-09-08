@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
-import { X, ArrowUpRight, ExternalLink } from 'lucide-react';
+import { X, ArrowUpRight } from 'lucide-react';
+import { useThemeLanguage } from '../context/ThemeLanguageContext';
 
 export default function ProjectModal({ project, onClose, onOpenContact, onNavigateSoftwareEngineering }) {
+  const { t, isRtl } = useThemeLanguage();
+
   if (!project) return null;
 
   useEffect(() => {
@@ -35,7 +38,7 @@ export default function ProjectModal({ project, onClose, onOpenContact, onNaviga
         <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-800/80 bg-black/40">
           <div>
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">
-              PROJECT SHOWCASE
+              {isRtl ? 'استعراض المشروع' : 'PROJECT SHOWCASE'}
             </span>
             <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight text-white font-display">
               {project.title}
@@ -66,7 +69,7 @@ export default function ProjectModal({ project, onClose, onOpenContact, onNaviga
             {/* Left Col: Overview */}
             <div className="md:col-span-7 space-y-3">
               <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
-                OVERVIEW
+                {isRtl ? 'نظرة عامة' : 'OVERVIEW'}
               </span>
               <p className="text-xs text-neutral-300 leading-relaxed font-medium">
                 {project.description ||
@@ -78,7 +81,7 @@ export default function ProjectModal({ project, onClose, onOpenContact, onNaviga
             <div className="md:col-span-5 space-y-4 bg-neutral-900/50 p-4 sm:p-5 rounded-xl border border-neutral-800/80">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 block">
-                  CATEGORY
+                  {isRtl ? 'التصنيف' : 'CATEGORY'}
                 </span>
                 <span className="text-xs font-bold uppercase text-white mt-0.5 block">
                   {project.category}
@@ -87,7 +90,7 @@ export default function ProjectModal({ project, onClose, onOpenContact, onNaviga
 
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 block">
-                  DELIVERABLES
+                  {isRtl ? 'المخرجات' : 'DELIVERABLES'}
                 </span>
                 <div className="flex flex-wrap gap-1.5 mt-1.5">
                   {project.tags?.map((t) => (
@@ -101,10 +104,10 @@ export default function ProjectModal({ project, onClose, onOpenContact, onNaviga
               <div className="pt-2">
                 <button
                   onClick={handleRequestSimilar}
-                  className="w-full py-2.5 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded transition-all duration-200 flex items-center justify-center space-x-1.5 cursor-pointer shadow-md shadow-red-600/30 transform hover:scale-[1.02]"
+                  className="w-full py-2.5 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded transition-all duration-200 flex items-center justify-center space-x-1.5 rtl:space-x-reverse cursor-pointer shadow-md shadow-red-600/30 transform hover:scale-[1.02]"
                 >
-                  <span>REQUEST SIMILAR WORK</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
+                  <span>{t('work.requestSimilar')}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 rtl:rotate-[-90deg]" />
                 </button>
               </div>
             </div>

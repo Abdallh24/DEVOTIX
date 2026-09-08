@@ -1,14 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { X, Briefcase, MapPin, Clock, ArrowUpRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { X, Briefcase, MapPin, Clock, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { useThemeLanguage } from '../context/ThemeLanguageContext';
 
 export default function CareerModal({ isOpen, onClose }) {
+  const { t, isRtl } = useThemeLanguage();
   const [selectedJob, setSelectedJob] = useState(null);
   const [applied, setApplied] = useState(false);
   const [applicantName, setApplicantName] = useState('');
   const [applicantEmail, setApplicantEmail] = useState('');
   const [portfolioLink, setPortfolioLink] = useState('');
 
-  const positions = [
+  const positions = isRtl ? [
+    {
+      id: 'senior-motion',
+      title: 'كبير مصممي الرسوم المتحركة وثلاثية الأبعاد',
+      department: 'الإنتاج والسينما',
+      location: 'عن بعد / هجين (القاهرة / دبي)',
+      type: 'دوام كامل',
+      description: 'قيادة التصميم البصري وأصول CGI ثلاثية الأبعاد للعلامات التجارية الفاخرة وحملات السيارات.'
+    },
+    {
+      id: 'fullstack-engineer',
+      title: 'كبير مهندسي الواجهات والتجارب التفاعلية',
+      department: 'هندسة البرمجيات',
+      location: 'عن بعد / لندن',
+      type: 'دوام كامل',
+      description: 'تطوير تجارب الويب التفاعلية ثلاثية الأبعاد WebGL، ومنصات React/Next.js عالية الأداء.'
+    },
+    {
+      id: 'media-buyer',
+      title: 'مسؤول أول شراء المساحات الإعلانية والأداء',
+      department: 'النمو والبيانات',
+      location: 'عن بعد',
+      type: 'دوام كامل',
+      description: 'إدارة ميزانيات إعلانية ضخمة عبر منصات Meta، وGoogle، وTikTok مع تحقيق أعلى عائد استثماري ROAS.'
+    },
+    {
+      id: 'creative-director',
+      title: 'مدير إبداعي مشارك',
+      department: 'الهوية والإشراف الفني',
+      location: 'هجين (القاهرة / نيويورك)',
+      type: 'دوام كامل',
+      description: 'الإشراف على حملات العلامات التجارية الفاخرة متعددة القنوات، والإخراج الفني، والرواية البصرية.'
+    }
+  ] : [
     {
       id: 'senior-motion',
       title: 'Senior 3D / Motion Designer',
@@ -81,19 +116,19 @@ export default function CareerModal({ isOpen, onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-neutral-800 bg-neutral-900/60">
           <div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
               <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
               <span className="text-[10px] font-bold tracking-widest uppercase text-brand-red">
-                JOIN DEVOTIX MEDIA
+                {isRtl ? 'انضم لديفوتيكس ميديا' : 'JOIN DEVOTIX MEDIA'}
               </span>
             </div>
             <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white font-display mt-0.5">
-              CAREERS & OPPORTUNITIES
+              {isRtl ? 'الوظائف والفرص المتاحة' : 'CAREERS & OPPORTUNITIES'}
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-neutral-900 hover:bg-brand-red hover:text-white text-neutral-400 flex items-center justify-center transition-colors border border-neutral-800"
+            className="w-9 h-9 rounded-full bg-neutral-900 hover:bg-brand-red hover:text-white text-neutral-400 flex items-center justify-center transition-colors border border-neutral-800 cursor-pointer"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -108,16 +143,18 @@ export default function CareerModal({ isOpen, onClose }) {
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <h4 className="text-xl font-black uppercase tracking-tight text-white font-display">
-                APPLICATION SUBMITTED
+                {isRtl ? 'تم تقديم الطلب بنجاح' : 'APPLICATION SUBMITTED'}
               </h4>
               <p className="mt-2 text-xs sm:text-sm text-neutral-400 max-w-md">
-                Thank you for applying to join the Devotix team. Our talent acquisition leads will review your portfolio and reach out shortly.
+                {isRtl
+                  ? 'شكراً لتقديمك للانضمام إلى فريق ديفوتيكس. سيراجع فريق الاستقطاب ملفك وسنتواصل معك قريباً.'
+                  : 'Thank you for applying to join the Devotix team. Our talent acquisition leads will review your portfolio and reach out shortly.'}
               </p>
               <button
                 onClick={handleReset}
-                className="mt-6 px-6 py-2.5 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded-md transition-colors"
+                className="mt-6 px-6 py-2.5 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded-md transition-colors cursor-pointer"
               >
-                Done
+                {isRtl ? 'تم' : 'Done'}
               </button>
             </div>
           ) : selectedJob ? (
@@ -125,9 +162,9 @@ export default function CareerModal({ isOpen, onClose }) {
             <div>
               <button
                 onClick={() => setSelectedJob(null)}
-                className="text-xs text-neutral-400 hover:text-white font-semibold uppercase mb-4 flex items-center gap-1"
+                className="text-xs text-neutral-400 hover:text-white font-semibold uppercase mb-4 flex items-center gap-1 cursor-pointer"
               >
-                ← Back to all roles
+                <span>{isRtl ? '→ العودة لجميع الوظائف' : '← Back to all roles'}</span>
               </button>
               <div className="p-4 rounded-xl bg-neutral-900/60 border border-neutral-800 mb-6">
                 <span className="text-[9px] font-bold uppercase tracking-widest text-brand-red">
@@ -142,20 +179,20 @@ export default function CareerModal({ isOpen, onClose }) {
               <form onSubmit={handleApply} className="space-y-4">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-1.5">
-                    Full Name *
+                    {isRtl ? 'الاسم بالكامل *' : 'Full Name *'}
                   </label>
                   <input
                     type="text"
                     required
                     value={applicantName}
                     onChange={(e) => setApplicantName(e.target.value)}
-                    placeholder="Alex Morgan"
+                    placeholder={isRtl ? 'مصطفى المصلحي' : 'Alex Morgan'}
                     className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-white text-xs placeholder-neutral-500 focus:outline-none focus:border-brand-red"
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-1.5">
-                    Email Address *
+                    {isRtl ? 'البريد الإلكتروني *' : 'Email Address *'}
                   </label>
                   <input
                     type="email"
@@ -168,22 +205,22 @@ export default function CareerModal({ isOpen, onClose }) {
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-1.5">
-                    Portfolio / GitHub / Reel URL *
+                    {isRtl ? 'رابط البورتفوليو / بيهانس / سابقة الأعمال *' : 'Portfolio / GitHub / Reel URL *'}
                   </label>
                   <input
                     type="url"
                     required
                     value={portfolioLink}
                     onChange={(e) => setPortfolioLink(e.target.value)}
-                    placeholder="https://behance.net/alex or https://alex.design"
+                    placeholder="https://behance.net/alex"
                     className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-white text-xs placeholder-neutral-500 focus:outline-none focus:border-brand-red"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-3 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-md shadow-red-600/30"
+                  className="w-full py-3 bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-md shadow-red-600/30 cursor-pointer"
                 >
-                  SUBMIT APPLICATION
+                  {isRtl ? 'إرسال طلب التقديم' : 'SUBMIT APPLICATION'}
                 </button>
               </form>
             </div>
@@ -192,7 +229,9 @@ export default function CareerModal({ isOpen, onClose }) {
             <div className="space-y-3.5">
               <div className="mb-4">
                 <p className="text-xs text-neutral-400 font-medium">
-                  We are always seeking world-class creatives, cinematic directors, 3D artists, and software engineers who push boundaries.
+                  {isRtl
+                    ? 'نبحث دائماً عن صناع أفلام استثنائيين، وفنانين ثلاثيي الأبعاد، ومصممي علامات، ومهندسي برمجيات يبتكرون بلا حدود.'
+                    : 'We are always seeking world-class creatives, cinematic directors, 3D artists, and software engineers who push boundaries.'}
                 </p>
               </div>
 
@@ -222,9 +261,9 @@ export default function CareerModal({ isOpen, onClose }) {
                     </div>
                   </div>
 
-                  <button className="self-start sm:self-center px-3.5 py-1.5 bg-neutral-800 group-hover:bg-brand-red group-hover:text-white text-neutral-300 text-[10px] font-bold uppercase rounded transition-colors flex items-center gap-1">
-                    <span>APPLY</span>
-                    <ArrowUpRight className="w-3 h-3" />
+                  <button className="self-start sm:self-center px-3.5 py-1.5 bg-neutral-800 group-hover:bg-brand-red group-hover:text-white text-neutral-300 text-[10px] font-bold uppercase rounded transition-colors flex items-center gap-1 cursor-pointer">
+                    <span>{isRtl ? 'التقديم' : 'APPLY'}</span>
+                    <ArrowUpRight className="w-3 h-3 rtl:rotate-[-90deg]" />
                   </button>
                 </div>
               ))}

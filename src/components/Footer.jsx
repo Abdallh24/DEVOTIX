@@ -1,7 +1,10 @@
 import React from 'react';
 import { ArrowUp, Instagram, Linkedin, Twitter, Youtube } from 'lucide-react';
+import { useThemeLanguage } from '../context/ThemeLanguageContext';
 
 export default function Footer({ onOpenPolicy }) {
+  const { isRtl, isDark, t } = useThemeLanguage();
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -25,15 +28,15 @@ export default function Footer({ onOpenPolicy }) {
   };
 
   return (
-    <footer id="footer" className="w-full bg-white text-black py-10 sm:py-14 border-t border-neutral-200 scroll-snap-align-end" style={{ scrollSnapAlign: 'end' }}>
+    <footer id="footer" className="w-full section-alt-b py-10 sm:py-14 border-t border-neutral-200/80 dark:border-white/10 select-none scroll-snap-align-end" style={{ scrollSnapAlign: 'end' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
-          {/* Left: Agency Logo & Tagline */}
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+          {/* Left / Right (in RTL): Agency Logo & Tagline */}
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left rtl:sm:text-right">
             <a
               href="#home"
               onClick={(e) => handleNavClick(e, '#home')}
-              className="flex items-center space-x-2 group focus:outline-none"
+              className="flex items-center space-x-2 rtl:space-x-reverse group focus:outline-none"
             >
               <img
                 src="/assets/footer/footer-logo.png"
@@ -41,51 +44,53 @@ export default function Footer({ onOpenPolicy }) {
                 className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                 onError={(e) => {
                   e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'flex';
+                  if (e.target.nextSibling) {
+                    e.target.nextSibling.style.display = 'flex';
+                  }
                 }}
               />
-              <div className="hidden items-center space-x-2">
+              <div className="hidden items-center space-x-2 rtl:space-x-reverse">
                 <span className="w-8 h-8 rounded-full bg-brand-red flex items-center justify-center text-white font-black text-base">
                   D
                 </span>
-                <span className="font-extrabold tracking-wider text-xl text-black font-display">
+                <span className="font-extrabold tracking-wider text-xl text-neutral-900 dark:text-white font-display">
                   DEVOTIX MEDIA
                 </span>
               </div>
             </a>
-            <div className="sm:border-l sm:border-neutral-300 sm:pl-4 flex flex-col justify-center">
-              <span className="text-xs font-bold uppercase tracking-wider text-neutral-900">
+            <div className="sm:border-l rtl:sm:border-l-0 rtl:sm:border-r sm:border-neutral-300 dark:sm:border-white/10 sm:pl-4 rtl:sm:pl-0 rtl:sm:pr-4 flex flex-col justify-center">
+              <span className="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-white">
                 DEVOTIX MEDIA
               </span>
-              <span className="text-[11px] text-neutral-500 font-medium mt-0.5">
-                © {new Date().getFullYear()} ALL RIGHTS RESERVED • CRAFTED FOR EXCELLENCE
+              <span className="text-[11px] text-neutral-500 dark:text-neutral-400 font-medium mt-0.5">
+                © {new Date().getFullYear()} {t('footer.copyright', 'ALL RIGHTS RESERVED. DEVOTIX MEDIA AGENCY.')}
               </span>
             </div>
           </div>
 
           {/* Center: Legal Links (Privacy Policy, Terms of Service) */}
-          <div className="flex items-center space-x-6 sm:space-x-8">
+          <div className="flex items-center space-x-6 sm:space-x-8 rtl:space-x-reverse">
             <button
               onClick={() => onOpenPolicy && onOpenPolicy('privacy')}
-              className="text-xs font-semibold tracking-wide text-neutral-700 hover:text-brand-red transition-colors focus:outline-none"
+              className="text-xs font-semibold tracking-wide text-neutral-600 dark:text-neutral-400 hover:text-brand-red transition-colors focus:outline-none cursor-pointer"
             >
-              Privacy Policy
+              {t('footer.privacyPolicy', 'Privacy Policy')}
             </button>
             <button
               onClick={() => onOpenPolicy && onOpenPolicy('terms')}
-              className="text-xs font-semibold tracking-wide text-neutral-700 hover:text-brand-red transition-colors focus:outline-none"
+              className="text-xs font-semibold tracking-wide text-neutral-600 dark:text-neutral-400 hover:text-brand-red transition-colors focus:outline-none cursor-pointer"
             >
-              Terms of Service
+              {t('footer.termsOfService', 'Terms of Service')}
             </button>
           </div>
 
-          {/* Right: Social Media Icons & Scroll to Top */}
-          <div className="flex items-center space-x-3">
+          {/* Right / Left (in RTL): Social Media Icons & Scroll to Top */}
+          <div className="flex items-center space-x-3 rtl:space-x-reverse">
             <a
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-brand-red hover:text-white text-neutral-700 flex items-center justify-center transition-all duration-300 shadow-sm"
+              className="w-8 h-8 rounded-full bg-neutral-100 dark:bg-[#111116] hover:bg-brand-red hover:text-white text-neutral-700 dark:text-neutral-300 flex items-center justify-center transition-all duration-300 shadow-sm border border-neutral-200/80 dark:border-white/10"
               aria-label="Instagram"
             >
               <Instagram className="w-4 h-4" />
@@ -94,7 +99,7 @@ export default function Footer({ onOpenPolicy }) {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-brand-red hover:text-white text-neutral-700 flex items-center justify-center transition-all duration-300 shadow-sm"
+              className="w-8 h-8 rounded-full bg-neutral-100 dark:bg-[#111116] hover:bg-brand-red hover:text-white text-neutral-700 dark:text-neutral-300 flex items-center justify-center transition-all duration-300 shadow-sm border border-neutral-200/80 dark:border-white/10"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-4 h-4" />
@@ -103,7 +108,7 @@ export default function Footer({ onOpenPolicy }) {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-brand-red hover:text-white text-neutral-700 flex items-center justify-center transition-all duration-300 shadow-sm"
+              className="w-8 h-8 rounded-full bg-neutral-100 dark:bg-[#111116] hover:bg-brand-red hover:text-white text-neutral-700 dark:text-neutral-300 flex items-center justify-center transition-all duration-300 shadow-sm border border-neutral-200/80 dark:border-white/10"
               aria-label="Twitter / X"
             >
               <Twitter className="w-4 h-4" />
@@ -112,7 +117,7 @@ export default function Footer({ onOpenPolicy }) {
               href="https://youtube.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-brand-red hover:text-white text-neutral-700 flex items-center justify-center transition-all duration-300 shadow-sm"
+              className="w-8 h-8 rounded-full bg-neutral-100 dark:bg-[#111116] hover:bg-brand-red hover:text-white text-neutral-700 dark:text-neutral-300 flex items-center justify-center transition-all duration-300 shadow-sm border border-neutral-200/80 dark:border-white/10"
               aria-label="YouTube"
             >
               <Youtube className="w-4 h-4" />
@@ -120,7 +125,7 @@ export default function Footer({ onOpenPolicy }) {
 
             <button
               onClick={scrollToTop}
-              className="w-8 h-8 rounded-full bg-black text-white hover:bg-brand-red flex items-center justify-center transition-all duration-300 shadow ml-2 group"
+              className="w-8 h-8 rounded-full bg-black dark:bg-[#181822] text-white hover:bg-brand-red flex items-center justify-center transition-all duration-300 shadow-sm border border-transparent dark:border-white/10 ml-2 rtl:ml-0 rtl:mr-2 group cursor-pointer"
               aria-label="Scroll to top"
             >
               <ArrowUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />

@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useThemeLanguage } from '../context/ThemeLanguageContext';
 
 export default function RightSlideBar({ currentPage = 'home' }) {
+  const { isRtl, isDark, t } = useThemeLanguage();
   const [activeSection, setActiveSection] = useState('');
   const [scrollPercent, setScrollPercent] = useState(0);
 
   const pageSections = {
     home: [
-      { id: 'home', label: 'Home' },
-      { id: 'work', label: 'Our Work' },
-      { id: 'clients', label: 'Clients' },
-      { id: 'graphic', label: 'Graphic' },
-      { id: 'production', label: 'Videos' },
-      { id: 'photography', label: 'Photography' },
-      { id: 'services', label: 'Services' },
+      { id: 'home', label: t('slideBar.home', 'Home') },
+      { id: 'services', label: t('slideBar.services', 'Services') },
+      { id: 'work', label: t('slideBar.work', 'Our Work') },
+      { id: 'production', label: t('slideBar.production', 'Production') },
+      { id: 'photography', label: t('slideBar.photography', 'Photography') },
+      { id: 'graphic', label: t('slideBar.graphic', 'Graphic') },
+      { id: 'clients', label: t('slideBar.clients', 'Clients') },
     ],
     'project-view': [
       { id: 'view-title', label: 'Overview' },
@@ -22,19 +24,16 @@ export default function RightSlideBar({ currentPage = 'home' }) {
       { id: 'view-details', label: 'Details' },
     ],
     about: [
-      { id: 'about-story', label: 'Our Story' },
+      { id: 'about-story', label: t('pages.about.storyTitle', 'Our Story') },
       { id: 'about-metrics', label: 'Impact & Values' },
     ],
     career: [
-      { id: 'career-hero', label: 'Join Team' },
-      { id: 'career-roles', label: 'Open Roles' },
-      { id: 'career-culture', label: 'Culture & Vibe' },
-      { id: 'career-perks', label: 'Benefits' },
+      { id: 'career-hero', label: t('pages.career.title', 'Join Team') },
+      { id: 'career-roles', label: t('pages.career.openRoles', 'Open Roles') },
     ],
     contact: [
-      { id: 'contact-form', label: 'Project Form' },
-      { id: 'contact-process', label: 'Next Steps' },
-      { id: 'contact-direct', label: 'Direct Contact' },
+      { id: 'contact-form', label: t('pages.contact.title', 'Project Form') },
+      { id: 'contact-direct', label: t('pages.contact.directContact', 'Direct Contact') },
     ],
   };
 
@@ -84,12 +83,16 @@ export default function RightSlideBar({ currentPage = 'home' }) {
   return (
     <aside
       aria-label="Page Slide Navigation"
-      className="fixed right-3 sm:right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center select-none"
+      className={`fixed ${
+        isRtl ? 'left-3 sm:left-4' : 'right-3 sm:right-4'
+      } top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center select-none`}
     >
       {/* Background Track Line */}
-      <div className="relative flex flex-col items-center py-2 px-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 shadow-lg">
+      <div className={`relative flex flex-col items-center py-2 px-1.5 rounded-full ${
+        isDark ? 'bg-black/40 border-white/10' : 'bg-white/80 border-neutral-300'
+      } backdrop-blur-md border shadow-lg`}>
         {/* Continuous Progress Fill Line */}
-        <div className="absolute top-4 bottom-4 w-[2px] bg-white/15 rounded-full" />
+        <div className={`absolute top-4 bottom-4 w-[2px] ${isDark ? 'bg-white/15' : 'bg-neutral-300'} rounded-full`} />
         <div
           className="absolute top-4 w-[2px] bg-brand-red rounded-full transition-all duration-150"
           style={{ height: `calc(${scrollPercent}% * 0.85)` }}
@@ -111,7 +114,9 @@ export default function RightSlideBar({ currentPage = 'home' }) {
                   className={`w-3.5 h-3.5 rounded-full border transition-all duration-300 flex items-center justify-center ${
                     isActive
                       ? 'border-brand-red bg-brand-red/20 scale-125'
-                      : 'border-white/30 hover:border-white/70 bg-transparent'
+                      : isDark
+                        ? 'border-white/30 hover:border-white/70 bg-transparent'
+                        : 'border-neutral-400 hover:border-neutral-700 bg-transparent'
                   }`}
                 >
                   {/* Center Dot */}
@@ -119,15 +124,25 @@ export default function RightSlideBar({ currentPage = 'home' }) {
                     className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
                       isActive
                         ? 'bg-brand-red scale-110'
-                        : 'bg-white/50 group-hover:bg-white'
+                        : isDark
+                          ? 'bg-white/50 group-hover:bg-white'
+                          : 'bg-neutral-500 group-hover:bg-neutral-800'
                     }`}
                   />
                 </div>
 
                 {/* Floating Tooltip on Hover */}
-                <div className="absolute right-6 px-2.5 py-1 rounded bg-black/90 text-white border border-white/15 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 group-hover:-translate-x-1 transition-all duration-200 shadow-xl backdrop-blur-sm">
+                <div
+                  className={`absolute ${
+                    isRtl ? 'left-6 group-hover:translate-x-1' : 'right-6 group-hover:-translate-x-1'
+                  } px-2.5 py-1 rounded bg-black/90 text-white border border-white/15 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 shadow-xl backdrop-blur-sm`}
+                >
                   {sec.label}
-                  <div className="absolute right-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-black/90 rotate-45 border-r border-t border-white/15" />
+                  <div
+                    className={`absolute ${
+                      isRtl ? 'left-[-4px] border-l border-b' : 'right-[-4px] border-r border-t'
+                    } top-1/2 -translate-y-1/2 w-2 h-2 bg-black/90 rotate-45 border-white/15`}
+                  />
                 </div>
               </button>
             );
